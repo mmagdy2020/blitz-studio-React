@@ -6,6 +6,7 @@ import User from './components/user/user';
 function App() {
   return (
     <div className="App">
+
       <User></User>
     </div>
   );
