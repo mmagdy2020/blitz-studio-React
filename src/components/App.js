@@ -1,7 +1,6 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import User from './components/user/user';
+import User from './user/user';
 
 function App() {
   return (
