@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
-let url = `${process.env.REACT_APP_REST_URI}/class` ;
+let url = `https://blitz-studio-rest.azurewebsites.net/class` ;
 
 class User extends React.Component {
   state = { data: null };
