@@ -1,13 +1,12 @@
 import React from 'react';
 import axios from 'axios';
 
-let url = `https://blitz-studio-rest.azurewebsites.net/class` ;
 
 class User extends React.Component {
   state = { data: null };
 
  async componentDidMount() {
-   let response = await axios.get(url);
+   let response = await axios.get('/class');
    let newData = response.data;
    console.log(newData);
    this.setState({ data: newData });
