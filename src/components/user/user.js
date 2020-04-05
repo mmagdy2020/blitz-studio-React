@@ -17,6 +17,7 @@ class User extends React.Component {
     console.log(this.state);
     if (this.state.data) {
       return <div>
+
         <h1>{process.env.REACT_APP_TITLE}</h1>
         <h3>{this.state.data.title}</h3>
 

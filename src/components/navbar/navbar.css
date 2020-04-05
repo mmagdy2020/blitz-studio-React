@@ -1,0 +1,11 @@
+#navbar .navbar-brand {
+  background-repeat: no-repeat;
+  background-image: url('./logo.png');
+  background-size: contain;
+  width: auto;
+  height: 100%;
+}
+
+#navbar .adjustable {
+  margin-right: 85px;
+}
