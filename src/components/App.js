@@ -8,12 +8,16 @@ import Main from './main/main';
 import Footer from './footer/footer';
 import {BrowserRouter as Router} from 'react-router-dom';
 
+// Mike: 
+import Checkin from './attendanceRecord/checkin/checkin';
 function App() {
   return (
     <div className="App">
       <Router>
         <Navbar/>
         <Main />
+    
+
       </Router>
       <Footer/>
     </div>

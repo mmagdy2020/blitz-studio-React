@@ -8,6 +8,9 @@ import Reviews from '../pages/reviews';
 import Contact from '../pages/contact';
 import './main.css';
 
+// Mike: 
+import Checkin from '../attendanceRecord/checkin/checkin';
+
 export default class Main extends React.Component {
   render() {
     return (
@@ -36,9 +39,10 @@ export default class Main extends React.Component {
             <Contact />
           </Route>
           <Route path="/">
-            <div id="home" className="container ">
+            {/* <div id="home" className="container ">
               <div className="connection-img"></div>
-            </div>
+            </div> */}
+            <Checkin  />
           </Route>
 
           <Route path="/login">
