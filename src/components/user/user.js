@@ -8,13 +8,13 @@ class User extends React.Component {
  async componentDidMount() {
    let response = await axios.get('/class');
    let newData = response.data;
+   
    console.log(newData);
    this.setState({ data: newData });
   //  console.log(this.state.data.title);
   }
   
   render() {
-    console.log(this.state);
     if (this.state.data) {
       return <div>
         <h1>{process.env.REACT_APP_TITLE}</h1>
