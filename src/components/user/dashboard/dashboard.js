@@ -1,6 +1,9 @@
 import React from 'react';
 import Profile from '../profile/profile';
 
+// Mike: 
+import Checkin from '../../attendanceRecord/checkin/checkin';
+
 export default class Dashboard extends React.Component {
   // props includes user with current user object. See /components/user/user.model.js
   render() {
@@ -15,6 +18,7 @@ export default class Dashboard extends React.Component {
 
       {/* <Check-in></Check-in>
       <Attendance-viewer></Attendance-viewer> */}
+        <Checkin/>
       </div>
 
       

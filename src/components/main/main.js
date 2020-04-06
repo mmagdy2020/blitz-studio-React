@@ -11,8 +11,7 @@ import Dashboard from '../user/dashboard/dashboard';
 import SignUp from '../user/signup/signup';
 import './main.css';
 
-// Mike: 
-import Checkin from '../attendanceRecord/checkin/checkin';
+
 
 export default class Main extends React.Component {
   constructor(props) {
