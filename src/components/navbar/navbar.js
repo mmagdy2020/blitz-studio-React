@@ -1,18 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import UserThumb from '../user/userThumbnail';
 import './navbar.css';
 
 export default class Navbar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { user: null };
+    this.state = { user: this.props.user };
   }
-
+  onClickLogOut() {
+    this.props.onLogOut();
+  }
   render() {
-    const userCorner = this.state.user ?
+    const userCorner = this.props.user ?
       <div>
-        {/* <UserThumb user={this.props.user}></UserThumb> */}
-        <Link id="log-out-btn" className="btn btn-outline-primary" type="button" onClick={() => { this.logout() }}>Log Out</Link>
+        <UserThumb user={this.props.user}></UserThumb>
+        <Link to="/login"><button id="log-out-btn" className="btn btn-outline-primary" type="button" onClick={() => this.onClickLogOut()}>Log Out</button></Link>
       </div>
       : <div>
         <Link id="log-in-btn" className="btn btn-outline-primary my-2 mx-1 my-sm-0" type="button" to="/login" >Log In</Link>
@@ -36,8 +39,7 @@ export default class Navbar extends React.Component {
               </li>
               <li className="nav-item dropdown">
                 <Link className="nav-link dropdown-toggle" to="/classes" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Classes
-                     </Link>
+                  Classes</Link>
                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                   <Link className="dropdown-item" to="/classes/salsa">Salsa</Link>
                   <Link className="dropdown-item" to="/classes/bachata">Bachata</Link>
@@ -47,8 +49,7 @@ export default class Navbar extends React.Component {
               <li className="nav-item">
                 <Link className="nav-link" to="/reviews">Reviews</Link>
               </li>
-              <li className="nav-item"><Link className="nav-link" to="/contact">Contact
-                    </Link>
+              <li className="nav-item"><Link className="nav-link" to="/contact">Contact</Link>
               </li>
             </ul>
           </div>
