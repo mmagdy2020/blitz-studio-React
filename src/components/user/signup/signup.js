@@ -44,7 +44,6 @@ export default class SignUp extends React.Component {
         [name]: value
       });
     }
-
   }
   render() {
     return (

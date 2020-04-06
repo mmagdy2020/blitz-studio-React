@@ -8,7 +8,12 @@ import axios from 'axios';
 require('dotenv').config();
 console.log('process.env.REACT_APP_REST_URI : ', process.env.REACT_APP_REST_URI);
 
-axios.defaults.baseURL = process.env.REACT_APP_REST_URI;
+// axios.defaults.baseURL = process.env.REACT_APP_REST_URI;
+// axios.defaults.baseURL = "https://github.com/mikemum/blitz-studio-REST"
+
+//Mo - adding Local Url
+axios.defaults.baseURL = 'http://localhost:4000'
+
 ReactDOM.render(
   <React.StrictMode>
     <App />

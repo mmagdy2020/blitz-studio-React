@@ -7,10 +7,10 @@
 }
 
 #main #home .connection-img {
-  background-image: url("./Connection\ White.png");
   background-position: 50% 50%;
   background-size: contain;
   background-repeat: no-repeat;
   width: 100%;
   height: calc( 100vh - 120px);
 }
+
