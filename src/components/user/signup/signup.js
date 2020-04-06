@@ -17,17 +17,38 @@ export default class SignUp extends React.Component {
       confirmPassword: ""
     }
   }
-  onClickSignUp() {
+  onClickSignUp(event) {
     // TODO: validate form
-    // TODO: send post request to create user
-    // TODO: on failure to create user, show error
-    // TODO: on successful creation, log in user
-    let user = new User(Math.floor(Math.random()*1000), this.state.firstname, this.state.lastname, this.state.email, this.state.phone, this.state.isMiuStudent, "user");
-    console.log(user);
-    // TODO: On successful log in
+    if (this.state.password !== this.state.confirmPassword){
+      event.preventDefault();
+      alert("Passwords do not match");
+    }
 
-    // emit 'event' that user logged in
-    this.props.onUserLoggedIn(user);
+    let user = User.AddNewUser( new User(Math.floor(Math.random() * 1000), this.state.firstname, this.state.lastname, this.state.email, this.state.phone, this.state.isMiuStudent, "user", this.state.password));
+    // TODO: send post request to create user
+    if(user){
+    // on successful creation, try to log in user
+     console.log("user was created.")
+
+     const authUser = User.LogInUser(user.email, user.password); 
+     if (authUser){
+       // On successful log in
+       console.log("user logged in:", authUser);
+
+       // emit 'event' that user logged in
+       this.props.onUserLoggedIn(authUser);
+
+     } else {
+       event.preventDefault();
+       alert("Could not log in with new user.");
+     }
+
+    } else{
+      // TODO: on failure to create new user, show error
+      event.preventDefault();
+      alert("Could not create new user.");
+    }
+
   }
   handleInputChange(event) {
     const target = event.target;
@@ -92,7 +113,7 @@ export default class SignUp extends React.Component {
 
             <div className="form-group">
               
-              <Link to="/dashboard"><button type="button" className="btn btn-outline-primary" onClick={() => { this.onClickSignUp() }}>Sign Up!</button></Link>
+              <Link to="/dashboard"><button type="button" className="btn btn-outline-primary" onClick={(event) => { this.onClickSignUp(event) }}>Sign Up!</button></Link>
 
             </div>
           </form>
