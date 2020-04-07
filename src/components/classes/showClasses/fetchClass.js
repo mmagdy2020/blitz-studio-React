@@ -9,9 +9,10 @@ class ShowClasses extends Component {
     classes: []
   };
 
+  //remove the static URL..
   componentDidMount() {
     axios
-      .get("http://localhost:4000/classes")
+      .get("/classes")
       .then(response => {
         console.log(response.data)
         this.setState({ classes: response.data });
