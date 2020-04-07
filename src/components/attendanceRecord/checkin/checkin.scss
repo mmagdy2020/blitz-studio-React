@@ -1,6 +1,7 @@
 $blueColor: #3498db;
 $greenColor: #4caf50;
-
+$btnBorderRadius: 0px;
+$borderRadius: 0px;
 * {
     box-sizing: border-box;
 }
@@ -12,30 +13,28 @@ $greenColor: #4caf50;
     row-gap: 20px;
 }
 
-.dance-class {
+.dance-class-info {
     padding: 10px;
     text-align: center;
     background-color: #f8f8f8;
-    border-radius: 20px;
+    border-radius: $borderRadius;
 }
 
-.dance-class:hover {
+.dance-class-info:hover {
     transform: scale(.99);
     cursor: pointer;
-    // background-color: #aad4f0;
     background-color: $greenColor;
     color: white;
     font-weight: bold;
 }
 
-.dance-class>div>img {
+.dance-class-info>div>img {
     height: 200px;
     width: 200px;
     border-radius: 150px;
-    // background-color: #3498db !important;
 }
 
-.dance-class>div>button {
+.dance-class-action>button {
     background-color: $blueColor !important;
 }
 
@@ -55,6 +54,9 @@ $greenColor: #4caf50;
     color: white;
 }
 
+.btn{
+    border-radius: $btnBorderRadius;
+}
 @media(max-width: 600px) {
 
     .classes {

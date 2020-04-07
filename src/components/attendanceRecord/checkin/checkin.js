@@ -2,10 +2,21 @@ import React, { Component } from 'react';
 import './checkin.scss';
 import axios from 'axios';
 
+// Mike:
+import ComingSoon from '../sharedComponents/comingSoon';
+import CircleProgress from '../sharedComponents/circleProgress';
+import LineProgress from '../sharedComponents/lineProgress';
+import User from '../../../models/user';
+import Attendance from '../attendance/attendance';
+
 class Checkin extends Component {
   constructor(props) {
     super(props);
-    this.state = { danceClasses: [] };
+    this.state = {
+      danceClasses: [],
+      viewDetails: false,
+      isCheckedIn: false
+    };
 
   }
   images =
@@ -16,16 +27,32 @@ class Checkin extends Component {
     };
 
   async componentDidMount() {
-    let response = await axios.get(axios.defaults.baseURL + '/class');
+    let response = await axios.get(axios.defaults.baseURL + '/classes');
 
     let danceClassesCopy = [...this.state.danceClasses];
     danceClassesCopy = response.data;
     this.setState({ danceClasses: danceClassesCopy });
   }
 
+  onLearnMoreBtnClick() {
+    let stateCoppy = { ...this.state };
+    stateCoppy.viewDetails = !this.state.viewDetails;
+    this.setState(stateCoppy);
+  }
+  onCheckinBtnClick() {
+    let stateCoppy = { ...this.state };
+    stateCoppy.isCheckedIn = !this.state.isCheckedIn;
+    this.setState(stateCoppy);
+  }
 
   render() {
-    // console.log(this.state);
+    // Mike: Building checking component
+    let classesForTheDay;
+    let checkinBtn;
+    let checkedInView;
+    let user = new User();
+    user.attendance = 60;
+    user.role = 'admin';
     let classes = this.state.danceClasses.map((c, index) => {
       if (/bachata/i.test(c.title)) {
         c.imgUrl = this.images.bachata;
@@ -37,34 +64,68 @@ class Checkin extends Component {
       return c;
     });
 
-    console.log(classes);
-    let classesForTheDay;
-    if (classes) {
-      classesForTheDay = classes.map(c => <div key={c._id} className="dance-class">
-        <div>
-          <img src={c.imgUrl} alt="salsa dance" />
-        </div>
-        <div>
-          <h3>{c.title}</h3>
-          <p>{c.description.substr(0, 140)}...</p>
-        </div>
-        <div>
-          <button className="btn btn-primary"> LEARN MORE >></button>
-        </div>
-      </div>
-      );
+    if (user.role === 'admin') {
+      // checkedInView = <LineProgress
+      //   title='Checked in view'
+      //   user={user} />
+      checkedInView = <Attendance
+        title='Checked in view'
+        user={user} />
+      
+    } else if (this.state.isCheckedIn) {
+      checkedInView = <CircleProgress
+        title='Checked in view'
+        user={user}
+      />
+
+    } else if (this.state.viewDetails) {
+      console.log('details view')
+      classesForTheDay = <ComingSoon title='This is the class details view' />;
+    } else {
+      if (classes) {
+
+        classesForTheDay = <div className="classes">
+          {classes.map(c => <div key={c._id} className="dance-class">
+            <div className="dance-class-info">
+              <div>
+                <img src={c.imgUrl} alt="salsa dance" />
+              </div>
+              <div>
+                <h3>{c.title}</h3>
+                <p>{c.description.substr(0, 140)}...</p>
+              </div>
+            </div>
+
+            <div className="dance-class-action">
+              <button
+                className="btn btn-primary"
+                onClick={() => this.onLearnMoreBtnClick()}
+              > LEARN MORE >></button>
+            </div>
+
+          </div>
+          )}
+        </div>;
+        checkinBtn = <button
+          className="btn-checkin"
+          onClick={() => this.onCheckinBtnClick()}
+        >CHEKIN</button>;
+
+      } else {
+        classesForTheDay = <h1>No Class for today</h1>;
+      }
     }
 
 
 
-    return <React.Fragment>
-      <div className="classes container">
-        {classesForTheDay}
-      </div>
+    console.log('State: ', this.state);
+    return (
       <div className="container">
-        <button className="btn-checkin">CHEKIN</button>
+        {classesForTheDay}
+        {checkinBtn}
+        {checkedInView}
       </div>
-    </React.Fragment>
+    );
   }
 }
 

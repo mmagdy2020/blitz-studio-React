@@ -1,0 +1,43 @@
+$blueColor: #3498db;
+$greenColor: #4caf50;
+$borderRadius: 0px;
+
+
+.btn-primary,
+.attendance-search {
+    display: grid;
+    grid-template-columns: 14fr 1fr;
+    background-color: $blueColor;
+}
+
+.attendance-search-item>input {
+    border-radius: $borderRadius;
+}
+
+.user-attendance-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    row-gap: 10px;
+}
+
+.user-attendance-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr .3fr;
+    background-color: gray;
+    color: white;
+}
+
+.user-attendance {
+    display: grid;
+    grid-template-columns: 1fr .75fr .75fr .3fr;
+    text-align: left;
+    background-color: #f8f8f8 !important;
+    padding: 10px;
+    grid-template-rows: min-content;
+}
+
+.user-attendance-header-item {
+    text-align: center;
+    padding: 10px;
+}
