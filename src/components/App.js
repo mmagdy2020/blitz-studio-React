@@ -13,7 +13,7 @@ function App() {
 
   let userManager = (newUser)=>{
     setUser(newUser);
-    console.log("DEBUG: New user in app:",newUser);
+    // console.log("DEBUG: New user in app:",newUser);
   }
 
   return (

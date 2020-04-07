@@ -1,10 +1,12 @@
 import React from 'react';
 import User from '../user.model';
-import { Link } from 'react-router-dom';
 import './signup.css';
+import {
+  withRouter
+} from 'react-router-dom'
 
 
-export default class SignUp extends React.Component {
+class SignUp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,17 +19,39 @@ export default class SignUp extends React.Component {
       confirmPassword: ""
     }
   }
-  onClickSignUp() {
+  async onClickSignUp(event) {
     // TODO: validate form
-    // TODO: send post request to create user
-    // TODO: on failure to create user, show error
-    // TODO: on successful creation, log in user
-    let user = new User(Math.floor(Math.random()*1000), this.state.firstname, this.state.lastname, this.state.email, this.state.phone, this.state.isMiuStudent, "user");
-    console.log(user);
-    // TODO: On successful log in
+    if (this.state.password !== this.state.confirmPassword) {
+      alert("Passwords do not match");
+    } else {
+      // send post request to create user
+      let user = await User.AddNewUser(new User(null, this.state.firstname, this.state.lastname, this.state.email, this.state.phone, this.state.isMiuStudent, "user", this.state.password));
+      if (user) {
+        // on successful creation, try to log in user
+        // console.log("user was created.")
+        const authUser = await User.LogInUser(user.email, user.password);
+        
+        // console.log("auth user",authUser);
+        if (authUser) {
+          // On successful log in
+          // console.log("user logged in:", authUser);
 
-    // emit 'event' that user logged in
-    this.props.onUserLoggedIn(user);
+          // emit 'event' that user logged in
+          this.props.onUserLoggedIn(authUser);
+          this.props.history.push('/dashboard');
+
+        } else {
+          alert("A new account was created. Click Log in and sign in for the first time!");
+        }
+
+      } else {
+        // TODO: on failure to create new user, show error
+        alert("An acount already exists for this email address.");
+      }
+    }
+
+
+
   }
   handleInputChange(event) {
     const target = event.target;
@@ -90,8 +114,8 @@ export default class SignUp extends React.Component {
             </div>
 
             <div className="form-group">
-              
-              <Link to="/dashboard"><button type="button" className="btn btn-outline-primary" onClick={() => { this.onClickSignUp() }}>Sign Up!</button></Link>
+
+              <button type="button" className="btn btn-outline-primary" onClick={(event) => { this.onClickSignUp(event) }}>Sign Up!</button>
 
             </div>
           </form>
@@ -100,3 +124,4 @@ export default class SignUp extends React.Component {
     )
   }
 }
+export default withRouter(SignUp);
