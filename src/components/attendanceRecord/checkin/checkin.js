@@ -5,7 +5,10 @@ import axios from 'axios';
 class Checkin extends Component {
   constructor(props) {
     super(props);
-    this.state = { danceClasses: [] };
+    this.state = {
+      danceClasses: [],
+      viewDetails: false
+    };
 
   }
   images =
@@ -23,6 +26,12 @@ class Checkin extends Component {
     this.setState({ danceClasses: danceClassesCopy });
   }
 
+  checkinBtnClickHandler() {
+    // alert('hi')
+    let stateCoppy = { ...this.state };
+    stateCoppy.viewDetails = !this.state.viewDetails;
+    this.setState(stateCoppy);
+  }
 
   render() {
     // console.log(this.state);
@@ -37,34 +46,53 @@ class Checkin extends Component {
       return c;
     });
 
-    console.log(classes);
+    // Mike: Building checking component
     let classesForTheDay;
-    if (classes) {
-      classesForTheDay = classes.map(c => <div key={c._id} className="dance-class">
-        <div>
-          <img src={c.imgUrl} alt="salsa dance" />
-        </div>
-        <div>
-          <h3>{c.title}</h3>
-          <p>{c.description.substr(0, 140)}...</p>
-        </div>
-        <div>
-          <button className="btn btn-primary"> LEARN MORE >></button>
-        </div>
-      </div>
-      );
+    let checkinBtn;
+    if (this.state.viewDetails) {
+      console.log('details view')
+      classesForTheDay = <h1>This is the class details view</h1>;
+    } else {
+      if (classes) {
+
+        classesForTheDay = <div className="classes">
+          {classes.map(c => <div key={c._id} className="dance-class">
+            <div className="dance-class-info">
+              <div>
+                <img src={c.imgUrl} alt="salsa dance" />
+              </div>
+              <div>
+                <h3>{c.title}</h3>
+                <p>{c.description.substr(0, 140)}...</p>
+              </div>
+            </div>
+
+            <div className="dance-class-action">
+              <button className="btn btn-primary"> LEARN MORE >></button>
+            </div>
+
+          </div>
+          )}
+        </div>;
+        checkinBtn = <button
+          className="btn-checkin"
+          onClick={() => this.checkinBtnClickHandler()}
+        >CHEKIN</button>;
+
+      } else {
+        classesForTheDay = <h1>No Class for today</h1>;
+      }
     }
 
 
 
-    return <React.Fragment>
-      <div className="classes container">
-        {classesForTheDay}
-      </div>
+    console.log('State: ', this.state);
+    return (
       <div className="container">
-        <button className="btn-checkin">CHEKIN</button>
+        {classesForTheDay}
+        {checkinBtn}
       </div>
-    </React.Fragment>
+    );
   }
 }
 

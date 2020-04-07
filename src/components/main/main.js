@@ -19,6 +19,7 @@ import './main.css';
 
 // Mike: 
 import Checkin from '../attendanceRecord/checkin/checkin';
+import Attendance from '../attendanceRecord/attendance/attendance';
 
 export default class Main extends React.Component {
   constructor(props) {
@@ -65,6 +66,13 @@ export default class Main extends React.Component {
           </Route>
           <Route path="/contact">
             <Contact />
+          </Route>
+          <Route path="/">
+            {/* <div id="home" className="container ">
+              <div className="connection-img"></div>
+            </div> */}
+            <Checkin />
+            <Attendance />
           </Route>
 
           <Route path="/login">

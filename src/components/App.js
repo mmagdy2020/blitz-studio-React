@@ -8,8 +8,6 @@ import Main from './main/main';
 import {BrowserRouter as Router} from 'react-router-dom';
 import {useState} from 'react';
 
-// Mike: 
-import Checkin from './attendanceRecord/checkin/checkin';
 function App() {
   let [user, setUser] = useState(null);
 
