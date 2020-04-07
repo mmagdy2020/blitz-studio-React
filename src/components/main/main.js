@@ -1,14 +1,20 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import User from '../user/user.model';
+// import User from '../user/user.model';
 import About from '../pages/about';
 import Calendar from '../pages/calendar';
-import Classes from '../pages/classes';
+// import Classes from '../classes/classes';
 import Reviews from '../pages/reviews';
 import Contact from '../pages/contact';
 import LogIn from '../user/login/login';
 import Dashboard from '../user/dashboard/dashboard';
 import SignUp from '../user/signup/signup';
+
+import AddClass from "../classes/addClass/addClass";
+
+import ShowClasses from "../classes/showClasses/fetchClass";
+// import ClassDetails from "../classes/showClassDetails/classDetails"
+
 import './main.css';
 
 // Mike: 
@@ -35,7 +41,17 @@ export default class Main extends React.Component {
           <Route path="/calendar">
             <Calendar />
           </Route>
-          <Route path="/classes/salsa">
+
+          <Route exact path = "/classes" component={ShowClasses}/>
+          {/* <Route exact path = "/classes/:id" component={ClassDetails}/> */}
+
+<Route exact path ="/add-class" component ={AddClass}/>
+
+          {/* <Route exact path = "/classes" component={Classes}/> */}
+          <Route exact path = "/classes/bachata" component={Contact}/>
+          <Route exact path = "/classes/salsa" component={Contact}/> 
+
+          {/* <Route path="/classes/salsa">
             <Classes classType="salsa"></Classes>
           </Route>
           <Route path="/classes/bachata">
@@ -43,7 +59,7 @@ export default class Main extends React.Component {
           </Route>
           <Route path="/classes/connection">
             <Classes classType="connection"></Classes>
-          </Route>
+          </Route> */}
           <Route path="/reviews">
             <Reviews />
           </Route>

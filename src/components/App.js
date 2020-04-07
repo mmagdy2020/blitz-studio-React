@@ -4,7 +4,7 @@ import 'bootstrap/dist/js/bootstrap.bundle';
 import './App.css';
 import Navbar from './navbar/navbar';
 import Main from './main/main';
-import Footer from './footer/footer';
+// import Footer from './footer/footer';
 import {BrowserRouter as Router} from 'react-router-dom';
 import {useState} from 'react';
 
@@ -15,7 +15,7 @@ function App() {
 
   let userManager = (newUser)=>{
     setUser(newUser);
-    console.log("DEBUG: New user in app:",newUser);
+    // console.log("DEBUG: New user in app:",newUser);
   }
 
   return (
@@ -25,7 +25,7 @@ function App() {
         <Main onUserChange={(user) => { userManager(user)}} user={user}/>
 
       </Router>
-      <Footer/>
+      {/* <Footer/> */}
     </div>
   );
 }

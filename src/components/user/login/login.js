@@ -1,7 +1,9 @@
 import React from 'react';
 import User from '../user.model';
 import './login.css';
-import { Link } from 'react-router-dom';
+import {
+  withRouter
+} from 'react-router-dom'
 
 class LogIn extends React.Component {
   state = { username: "", password: "" };
@@ -13,22 +15,32 @@ class LogIn extends React.Component {
     const target = event.target;
     const value = target.value;
     const name = target.name;
-    console.log("DEBUG: input change name", name, "value:", value);
+    // console.log("DEBUG: input change name", name, "value:", value);
     this.setState({
       [name]: value
     });
   }
-  onClickLogIn() {
+  async onClickLogIn(event) {
+
     // TODO: Authenticate with server
-    // TODO: on failure
-    // TODO: show error
+    const user = await User.LogInUser(this.state.username, this.state.password);
+
+    if (!user) {
+      // TODO: on failure
+      console.log("error here")
+
+      // TODO: show error
+      alert("Username and password combination is invalid. Try again");
+
+    } else {
+      // on successful log in
+      this.props.history.push({pathname: '/dashboard'});
+      // emit 'event' that user logged in
+      this.props.onUserLoggedIn(user);
+    }
 
 
-    // on successful log in
-    // emit 'event' that user logged in
-    const user = new User(Math.floor(Math.random() * 1000), "FirstName", "LastName", this.state.username, "1234567890", true, "user");
-    console.log(user);
-    this.props.onUserLoggedIn(user);
+    // console.log(user);
   }
   render() {
     return (
@@ -46,9 +58,7 @@ class LogIn extends React.Component {
               <input id="password" name="password" className="form-control" type="password" placeholder="Password" value={this.state.password} onChange={this.handleInputChange}></input>
 
             </div>
-            <Link  to="/dashboard"><button type="button" className="btn btn-primary" onClick={_ => this.onClickLogIn()}>Log In</button></Link>
-            
-
+             <button type="button" className="btn btn-primary" onClick={event => this.onClickLogIn(event)}>Log In</button> 
           </form>
         </div>
       </div>
@@ -58,4 +68,4 @@ class LogIn extends React.Component {
 
 }
 
-export default LogIn;
+export default withRouter(LogIn);

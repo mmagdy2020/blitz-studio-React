@@ -41,9 +41,14 @@ export default class Navbar extends React.Component {
                 <Link className="nav-link dropdown-toggle" to="/classes" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Classes</Link>
                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <Link className="dropdown-item" to="/classes/salsa">Salsa</Link>
+                  {/* <Link className="dropdown-item" to="/classes/salsa">Salsa</Link>
                   <Link className="dropdown-item" to="/classes/bachata">Bachata</Link>
+                  <Link className="dropdown-item" to="/classes/connection">Connection Workshop</Link> */}
+
+                  <Link className="dropdown-item" to="/classes">All Classes</Link>
+                  <Link className="dropdown-item" to="/add-class">Add Class</Link>
                   <Link className="dropdown-item" to="/classes/connection">Connection Workshop</Link>
+
                 </div>
               </li>
               <li className="nav-item">
