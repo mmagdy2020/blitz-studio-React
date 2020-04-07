@@ -4,7 +4,18 @@ import UserList from '../userList/userList';
 import User from '../user.model';
 
 export default class Dashboard extends React.Component {
-  
+  constructor(props){
+    super(props);
+    this.state = {users: []};
+
+  }
+  async componentDidUpdate(){
+    if (this.props.user.role === "admin" && this.state.users.length === 0){
+      let users = await User.GetAllUsers();
+      this.setState({ users: users });
+    }
+    
+  }
   // props includes user with current user object. See /components/user/user.model.js
   render() {
     let dash;
@@ -34,9 +45,9 @@ export default class Dashboard extends React.Component {
         <h2>Student Check in</h2>
         <hr></hr>
         <h2>All Users</h2>
-        <UserList users={User.GetAllUsers()}></UserList>
+        <UserList users={this.state.users}></UserList>
         <hr></hr>
-        <h2>All classes</h2>
+        <h2>All Classes</h2>
         <hr></hr>
         <h2>Attendance Report</h2>
         <hr></hr>

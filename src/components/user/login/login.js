@@ -1,7 +1,9 @@
 import React from 'react';
 import User from '../user.model';
 import './login.css';
-import { Link } from 'react-router-dom';
+import {
+  withRouter
+} from 'react-router-dom'
 
 class LogIn extends React.Component {
   state = { username: "", password: "" };
@@ -18,22 +20,22 @@ class LogIn extends React.Component {
       [name]: value
     });
   }
-  onClickLogIn(event) {
+  async onClickLogIn(event) {
+
     // TODO: Authenticate with server
-    const user = User.LogInUser(this.state.username, this.state.password);
+    const user = await User.LogInUser(this.state.username, this.state.password);
 
-    if(!user){
-    // TODO: on failure
-    console.log("error ehre")
-    event.preventDefault();
-  
-    // TODO: show error
-    alert("Username and password combination is invalid. Try again");
-    
-    } else{
-    // on successful log in
+    if (!user) {
+      // TODO: on failure
+      console.log("error here")
 
-    // emit 'event' that user logged in
+      // TODO: show error
+      alert("Username and password combination is invalid. Try again");
+
+    } else {
+      // on successful log in
+      this.props.history.push({pathname: '/dashboard'});
+      // emit 'event' that user logged in
       this.props.onUserLoggedIn(user);
     }
 
@@ -56,9 +58,7 @@ class LogIn extends React.Component {
               <input id="password" name="password" className="form-control" type="password" placeholder="Password" value={this.state.password} onChange={this.handleInputChange}></input>
 
             </div>
-            <Link  to="/dashboard"><button type="button" className="btn btn-primary" onClick={event => this.onClickLogIn(event)}>Log In</button></Link>
-            
-
+             <button type="button" className="btn btn-primary" onClick={event => this.onClickLogIn(event)}>Log In</button> 
           </form>
         </div>
       </div>
@@ -68,4 +68,4 @@ class LogIn extends React.Component {
 
 }
 
-export default LogIn;
+export default withRouter(LogIn);
