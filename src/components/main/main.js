@@ -17,10 +17,6 @@ import ShowClasses from "../classes/showClasses/fetchClass";
 
 import './main.css';
 
-// Mike: 
-import Checkin from '../attendanceRecord/checkin/checkin';
-import Attendance from '../attendanceRecord/attendance/attendance';
-
 export default class Main extends React.Component {
   constructor(props) {
     super(props);
@@ -43,14 +39,14 @@ export default class Main extends React.Component {
             <Calendar />
           </Route>
 
-          <Route exact path = "/classes" component={ShowClasses}/>
+          <Route exact path="/classes" component={ShowClasses} />
           {/* <Route exact path = "/classes/:id" component={ClassDetails}/> */}
 
-<Route exact path ="/add-class" component ={AddClass}/>
+          <Route exact path="/add-class" component={AddClass} />
 
           {/* <Route exact path = "/classes" component={Classes}/> */}
-          <Route exact path = "/classes/bachata" component={Contact}/>
-          <Route exact path = "/classes/salsa" component={Contact}/> 
+          <Route exact path="/classes/bachata" component={Contact} />
+          <Route exact path="/classes/salsa" component={Contact} />
 
           {/* <Route path="/classes/salsa">
             <Classes classType="salsa"></Classes>
@@ -66,13 +62,6 @@ export default class Main extends React.Component {
           </Route>
           <Route path="/contact">
             <Contact />
-          </Route>
-          <Route path="/">
-            {/* <div id="home" className="container ">
-              <div className="connection-img"></div>
-            </div> */}
-            <Checkin />
-            <Attendance />
           </Route>
 
           <Route path="/login">

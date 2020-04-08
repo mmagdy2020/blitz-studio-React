@@ -2,12 +2,19 @@ import React, { Component } from 'react';
 import './checkin.scss';
 import axios from 'axios';
 
+// Mike:
+import ComingSoon from '../sharedComponents/comingSoon';
+import CircleProgress from '../sharedComponents/circleProgress';
+import User from '../../../models/user';
+import Attendance from '../attendance/attendance';
+
 class Checkin extends Component {
   constructor(props) {
     super(props);
     this.state = {
       danceClasses: [],
-      viewDetails: false
+      viewDetails: false,
+      isCheckedIn: false
     };
 
   }
@@ -19,22 +26,33 @@ class Checkin extends Component {
     };
 
   async componentDidMount() {
-    let response = await axios.get(axios.defaults.baseURL + '/class');
+    let response = await axios.get(axios.defaults.baseURL + '/classes');
 
     let danceClassesCopy = [...this.state.danceClasses];
     danceClassesCopy = response.data;
     this.setState({ danceClasses: danceClassesCopy });
   }
 
-  checkinBtnClickHandler() {
-    // alert('hi')
+  onLearnMoreBtnClick() {
     let stateCoppy = { ...this.state };
     stateCoppy.viewDetails = !this.state.viewDetails;
     this.setState(stateCoppy);
   }
+  onCheckinBtnClick() {
+    let stateCoppy = { ...this.state };
+    stateCoppy.isCheckedIn = !this.state.isCheckedIn;
+    this.setState(stateCoppy);
+  }
 
   render() {
-    // console.log(this.state);
+    let classesForTheDay;
+    let checkinBtn;
+    let checkedInView;
+    let user = this.props.user;
+    user.attendance = 60;
+
+    console.log('user:.............', user);
+    // TODO: to be removed when dance classes have their own imgUrl
     let classes = this.state.danceClasses.map((c, index) => {
       if (/bachata/i.test(c.title)) {
         c.imgUrl = this.images.bachata;
@@ -46,12 +64,19 @@ class Checkin extends Component {
       return c;
     });
 
-    // Mike: Building checking component
-    let classesForTheDay;
-    let checkinBtn;
-    if (this.state.viewDetails) {
-      console.log('details view')
-      classesForTheDay = <h1>This is the class details view</h1>;
+    if (user.role === 'admin') {
+      checkedInView = <Attendance
+        title='Checked in view'
+        user={user} />
+      
+    } else if (this.state.isCheckedIn) {
+      checkedInView = <CircleProgress
+        title='Checked in view'
+        user={user}
+      />
+
+    } else if (this.state.viewDetails) {
+      classesForTheDay = <ComingSoon title='This is the class details view' />;
     } else {
       if (classes) {
 
@@ -68,7 +93,10 @@ class Checkin extends Component {
             </div>
 
             <div className="dance-class-action">
-              <button className="btn btn-primary"> LEARN MORE >></button>
+              <button
+                className="btn btn-primary"
+                onClick={() => this.onLearnMoreBtnClick()}
+              > LEARN MORE >></button>
             </div>
 
           </div>
@@ -76,7 +104,7 @@ class Checkin extends Component {
         </div>;
         checkinBtn = <button
           className="btn-checkin"
-          onClick={() => this.checkinBtnClickHandler()}
+          onClick={() => this.onCheckinBtnClick()}
         >CHEKIN</button>;
 
       } else {
@@ -84,13 +112,13 @@ class Checkin extends Component {
       }
     }
 
-
-
-    console.log('State: ', this.state);
     return (
       <div className="container">
         {classesForTheDay}
+
         {checkinBtn}
+
+        {checkedInView}
       </div>
     );
   }

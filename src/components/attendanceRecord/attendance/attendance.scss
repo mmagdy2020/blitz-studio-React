@@ -1,45 +1,25 @@
 $blueColor: #3498db;
 $greenColor: #4caf50;
+$borderRadius: 0px;
 
 
+.btn-primary {
+    background-color: $blueColor;
+}
 
-
-.attendance-search {
+.attendance-content {
     display: grid;
-    grid-template-columns: 9fr 1fr;
-}
-
-.attendance-search-item>input {
-    border-radius: 20px;
-}
-
-.user-attendance-item>img {
-    height: 80px;
-    width: 80px;
-    border-radius: 50px;
-}
-
-.user-attendance-header {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr .3fr;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    row-gap: 10px;
 }
 
 .user-attendance {
     display: grid;
     grid-template-columns: 1fr .75fr .75fr .3fr;
-}
-
-.user-attendance-header-item {
-    // border: solid black 1px;
-    text-align: center;
-    padding: 10px;
-}
-
-.user-attendance-item {
-    // border: solid black 1px;
     text-align: left;
-    margin-top: 5px;
     background-color: #f8f8f8 !important;
     padding: 10px;
-    // border-radius: 20px;
+    grid-template-rows: min-content;
 }
+

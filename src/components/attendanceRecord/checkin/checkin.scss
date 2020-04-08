@@ -1,52 +1,28 @@
 $blueColor: #3498db;
 $greenColor: #4caf50;
-$btnBorderRadius: 20px;
-
+$btnBorderRadius: 0px;
+$borderRadius: 0px;
 * {
     box-sizing: border-box;
 }
 
 .classes {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     column-gap: 20px;
     row-gap: 20px;
 }
-
-// .dance-class {
-//     padding: 10px;
-//     text-align: center;
-//     background-color: #f8f8f8;
-//     border-radius: 20px;
-// }
-
-// .dance-class:hover {
-//     transform: scale(.99);
-//     cursor: pointer;
-//     // background-color: #aad4f0;
-//     background-color: $greenColor;
-//     color: white;
-//     font-weight: bold;
-// }
-
-// .dance-class>div>img {
-//     height: 200px;
-//     width: 200px;
-//     border-radius: 150px;
-//     // background-color: #3498db !important;
-// }
 
 .dance-class-info {
     padding: 10px;
     text-align: center;
     background-color: #f8f8f8;
-    border-radius: 20px;
+    border-radius: $borderRadius;
 }
 
 .dance-class-info:hover {
     transform: scale(.99);
     cursor: pointer;
-    // background-color: #aad4f0;
     background-color: $greenColor;
     color: white;
     font-weight: bold;
@@ -56,7 +32,6 @@ $btnBorderRadius: 20px;
     height: 200px;
     width: 200px;
     border-radius: 150px;
-    // background-color: #3498db !important;
 }
 
 .dance-class-action>button {
