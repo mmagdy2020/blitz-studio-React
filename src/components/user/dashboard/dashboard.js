@@ -14,7 +14,7 @@ export default class Dashboard extends React.Component {
     this.state = {users: []};
 
   }
-  async componentDidMount(){
+  async componentDidUpdate(){
     if (this.props.user.role === "admin" && this.state.users.length === 0){
       let users = await User.GetAllUsers();
       this.setState({ users: users });
