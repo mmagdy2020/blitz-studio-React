@@ -29,7 +29,7 @@ class Attendance extends Component {
       <div className="user-attendance">
         <LineProgress user={user} caption='Bachata' />
         <div className="user-attendance-item">
-          <select className="form-control" value={danceClasses[1]}>
+          <select className="form-control" >
             <option>{danceClasses[0]}</option>
             <option>{danceClasses[1]}</option>
             <option>{danceClasses[2]}</option>
