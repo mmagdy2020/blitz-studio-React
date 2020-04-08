@@ -39,14 +39,14 @@ export default class Main extends React.Component {
             <Calendar />
           </Route>
 
-          <Route exact path = "/classes" component={ShowClasses}/>
+          <Route exact path="/classes" component={ShowClasses} />
           {/* <Route exact path = "/classes/:id" component={ClassDetails}/> */}
 
-<Route exact path ="/add-class" component ={AddClass}/>
+          <Route exact path="/add-class" component={AddClass} />
 
           {/* <Route exact path = "/classes" component={Classes}/> */}
-          <Route exact path = "/classes/bachata" component={Contact}/>
-          <Route exact path = "/classes/salsa" component={Contact}/> 
+          <Route exact path="/classes/bachata" component={Contact} />
+          <Route exact path="/classes/salsa" component={Contact} />
 
           {/* <Route path="/classes/salsa">
             <Classes classType="salsa"></Classes>
