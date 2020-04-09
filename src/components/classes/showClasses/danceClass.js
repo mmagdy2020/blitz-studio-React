@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Card} from "react-bootstrap";
 import { withRouter } from "react-router";
 
+
 class DanceClass extends Component {
 
 
@@ -15,7 +16,6 @@ class DanceClass extends Component {
 
     return (
       <center>
-    
               <Card border="primary" style={{ width: "25rem" }}>
                 <Card.Header>{this.props.title}</Card.Header>
                 <Card.Body>
@@ -25,6 +25,7 @@ class DanceClass extends Component {
                 </Card.Body>
               </Card>
               <br />
+
       </center>
     );
   }

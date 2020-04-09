@@ -44,45 +44,36 @@ export class classDetails extends Component {
     render() {
 
 
-        return ( <
-            center >
-            <
-            Card style = {
-                { width: '18rem' } } >
-            <
-            Card.Img variant = "top"
-            src = { this.state.imgUrl }
-            /> <
-            Card.Body >
-            <
-            Card.Title > { this.state.title } < /Card.Title> <
-            Card.Text > { this.state.desc } <
-            /Card.Text> <
-            /Card.Body> <
-            ListGroup className = "list-group-flush" >
-            <
-            ListGroupItem > { this.state.instructor } < /ListGroupItem> <
-            ListGroupItem > D { this.state.date } < /ListGroupItem> <
-            ListGroupItem > { this.state.time } < /ListGroupItem> <
-            /ListGroup> <
-            Card.Body >
+        return ( 
+            <center >
+            <Card style = {{ width: '18rem' } } >
+            <Card.Img variant = "top" src = {this.state.imgUrl} /> 
+            <Card.Body>
+            <Card.Title > { this.state.title } </Card.Title> 
+            <Card.Text > { this.state.desc } </Card.Text> 
+            </Card.Body> 
+            <ListGroup className = "list-group-flush" >
+            <ListGroupItem > { this.state.instructor } </ListGroupItem> 
+            <ListGroupItem > D { this.state.date } </ListGroupItem> 
+            <ListGroupItem > { this.state.time } </ListGroupItem> 
+            </ListGroup> 
+            <Card.Body >
 
-            <
-            Button onClick = {
-                () => this.updateClassDetailsHandeller() } > Update! < /Button>
+            <Button onClick = {() => this.updateClassDetailsHandeller() } > Update! </Button>
 
             { /* <Link to="/classes" ><Button onClick={()=>this.deleteClassDetailsHandeller()}>Delete!</Button></Link>  */ }
 
-            <
-            Link to = "/classes" > < Button onClick = {
-                () => this.deleteClassDetailsHandeller() } > Delete! < /Button></Link >
+            <Link to = "/classes" > <Button onClick = {() => this.deleteClassDetailsHandeller() } > Delete! </Button></Link>
 
-            <
-            /Card.Body> <
-            /Card>
+            </Card.Body>
+             </Card>
 
-            <
-            /center>
+            </center>
+
+
+
+
+
         )
 
     }

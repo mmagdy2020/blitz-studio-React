@@ -16,8 +16,8 @@ console.log('process.env.REACT_APP_REST_URI : ', process.env.REACT_APP_REST_URI)
 axios.defaults.baseURL = 'http://localhost:4000'
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>,
+    document.getElementById('root')
+  );

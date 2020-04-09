@@ -21,6 +21,7 @@ function App() {
       <Router>
         <Navbar user={user} onLogOut={_ => { userManager(null)}}/>
         <Main onUserChange={(user) => { userManager(user)}} user={user}/>
+
       </Router>
       {/* <Footer/> */}
     </div>

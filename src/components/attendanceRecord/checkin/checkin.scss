@@ -1,0 +1,67 @@
+$blueColor: #3498db;
+$greenColor: #4caf50;
+$btnBorderRadius: 0px;
+$borderRadius: 0px;
+* {
+    box-sizing: border-box;
+}
+
+.classes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 20px;
+    row-gap: 20px;
+}
+
+.dance-class-info {
+    padding: 10px;
+    text-align: center;
+    background-color: #f8f8f8;
+    border-radius: $borderRadius;
+}
+
+.dance-class-info:hover {
+    transform: scale(.99);
+    cursor: pointer;
+    background-color: $greenColor;
+    color: white;
+    font-weight: bold;
+}
+
+.dance-class-info>div>img {
+    height: 200px;
+    width: 200px;
+    border-radius: 150px;
+}
+
+.dance-class-action>button {
+    background-color: $blueColor !important;
+}
+
+.btn-checkin {
+    margin-top: 10px;
+    border: 2px solid $blueColor;
+    background-color: white;
+    color: $blueColor;
+    border-radius: 35px;
+    font-weight: bolder;
+    font-size: xx-large;
+    padding: 10px;
+    width: 100% !important;
+}
+.btn-checkin:hover {
+    background-color: $blueColor;
+    color: white;
+}
+
+.btn{
+    border-radius: $btnBorderRadius;
+}
+@media(max-width: 600px) {
+
+    .classes {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+}

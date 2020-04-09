@@ -43,8 +43,8 @@ export default class Main extends React.Component {
           <Route exact path ="/add-class" component ={AddClass}/>
 
           {/* <Route exact path = "/classes" component={Classes}/> */}
-          <Route exact path = "/classes/bachata" component={Contact}/>
-          <Route exact path = "/classes/salsa" component={Contact}/> 
+          <Route exact path="/classes/bachata" component={Contact} />
+          <Route exact path="/classes/salsa" component={Contact} />
 
 
 

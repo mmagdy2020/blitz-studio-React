@@ -1,0 +1,25 @@
+$blueColor: #3498db;
+$greenColor: #4caf50;
+$borderRadius: 0px;
+
+
+.btn-primary {
+    background-color: $blueColor;
+}
+
+.attendance-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    row-gap: 10px;
+}
+
+.user-attendance {
+    display: grid;
+    grid-template-columns: 1fr .75fr .75fr .3fr;
+    text-align: left;
+    background-color: #f8f8f8 !important;
+    padding: 10px;
+    grid-template-rows: min-content;
+}
+
