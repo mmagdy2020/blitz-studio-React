@@ -70,10 +70,6 @@ export class classDetails extends Component {
 
             </center>
 
-
-
-
-
         )
 
     }
