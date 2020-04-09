@@ -59,11 +59,11 @@ export class classDetails extends Component {
             </ListGroup> 
             <Card.Body >
 
-            <Button onClick = {() => this.updateClassDetailsHandeller() } > Update! </Button>
+            <Link to = "/classes"> <Button onClick = {() => this.updateClassDetailsHandeller() } > Update! </Button> </Link>
 
             { /* <Link to="/classes" ><Button onClick={()=>this.deleteClassDetailsHandeller()}>Delete!</Button></Link>  */ }
 
-            <Link to = "/classes" > <Button onClick = {() => this.deleteClassDetailsHandeller() } > Delete! </Button></Link>
+            <Link to = "/classes"> <Button onClick = {() => this.deleteClassDetailsHandeller() } > Delete! </Button></Link>
 
             </Card.Body>
              </Card>
