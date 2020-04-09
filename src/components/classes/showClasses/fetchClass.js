@@ -28,7 +28,7 @@ class ShowClasses extends Component {
           title={c.title}
           desc={c.description}
           date={c.date}
-          // classInfo={()=>{this.props.classClicked(c._id)}}
+          id={c._id}
         ></DanceClass>
       );
     });

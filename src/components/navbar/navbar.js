@@ -46,7 +46,10 @@ export default class Navbar extends React.Component {
                   <Link className="dropdown-item" to="/classes/connection">Connection Workshop</Link> */}
 
                   <Link className="dropdown-item" to="/classes">All Classes</Link>
+                  {/* <Link className="dropdown-item" to="/classes/:id">showDetailsClass</Link>  */}
+
                   <Link className="dropdown-item" to="/add-class">Add Class</Link>
+
                   <Link className="dropdown-item" to="/classes/connection">Connection Workshop</Link>
 
                 </div>

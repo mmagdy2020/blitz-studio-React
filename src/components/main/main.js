@@ -1,21 +1,19 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-// import User from '../user/user.model';
 import About from '../pages/about';
+import './main.css';
 import Calendar from '../pages/calendar';
-// import Classes from '../classes/classes';
 import Reviews from '../pages/reviews';
 import Contact from '../pages/contact';
 import LogIn from '../user/login/login';
 import Dashboard from '../user/dashboard/dashboard';
 import SignUp from '../user/signup/signup';
-
 import AddClass from "../classes/addClass/addClass";
-
 import ShowClasses from "../classes/showClasses/fetchClass";
-// import ClassDetails from "../classes/showClassDetails/classDetails"
+import UpdateClass from "../classes/editClass";
+import ClassDetails from '../classes/showClassDetails/classDetails';
 
-import './main.css';
+
 
 export default class Main extends React.Component {
   constructor(props) {
@@ -40,13 +38,15 @@ export default class Main extends React.Component {
           </Route>
 
           <Route exact path = "/classes" component={ShowClasses}/>
-          {/* <Route exact path = "/classes/:id" component={ClassDetails}/> */}
-
-<Route exact path ="/add-class" component ={AddClass}/>
+          <Route exact path = "/edit-class/:id" component ={UpdateClass}/>
+          <Route exact path = "/classes/:id" component={ClassDetails}/>
+          <Route exact path ="/add-class" component ={AddClass}/>
 
           {/* <Route exact path = "/classes" component={Classes}/> */}
           <Route exact path = "/classes/bachata" component={Contact}/>
           <Route exact path = "/classes/salsa" component={Contact}/> 
+
+
 
           {/* <Route path="/classes/salsa">
             <Classes classType="salsa"></Classes>
@@ -90,3 +90,8 @@ export default class Main extends React.Component {
     )
   }
 }
+
+// export default Main
+// // export default withRouter(Main)
+
+

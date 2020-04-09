@@ -1,0 +1,3 @@
+export const CREATE_CLASS = 'CREATE_CLASS'
+export const UPDETE_CLASS = 'UPDATE_CLASS'
+export const DELETE_CLASS = 'DELETE_CLASS'

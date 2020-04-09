@@ -1,7 +1,16 @@
 import React, { Component } from "react";
 import { Card} from "react-bootstrap";
+import { withRouter } from "react-router";
 
 class DanceClass extends Component {
+
+
+  // MO - ShowClassId Handeller..
+  showClassDetailsHandeller = ()=>{
+   this.props.history.push(`/classes/${this.props.id}`);
+  }
+
+  
   render() {
 
     return (
@@ -12,7 +21,7 @@ class DanceClass extends Component {
                 <Card.Body>
                   <Card.Title>{this.props.date}</Card.Title>
                   <Card.Text>{this.props.desc}</Card.Text>
-                  <button onClick={this.props.classInfo}> clickMe</button>
+                  <button onClick={()=>this.showClassDetailsHandeller()}> clickMe</button>
                 </Card.Body>
               </Card>
               <br />
@@ -21,4 +30,4 @@ class DanceClass extends Component {
   }
 }
 
-export default DanceClass;
+export default withRouter(DanceClass)
