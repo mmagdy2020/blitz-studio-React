@@ -1,18 +1,102 @@
-
+import axios from 'axios';
 export default class User {
-    constructor(id, fn, ln, imgUrl, phone, email, pw, isMiuStudent, balance, role) {
-        this._id = id;
-        this.firstName = fn || 'Jordan';
-        this.lastName = ln || 'Walke';
-        this.name = this.firstName + ' ' + this.lastName;
-        this.imgUrl = imgUrl || process.env.REACT_APP_IMG_URL;
-        this.phone = phone;
-        this.email = email;
-        this.password = pw;
-        this.isMiuStudent = isMiuStudent;
-        this.balance = balance;
-        this.role = role || 'user';
-        this.attendances = [];
-    
+  constructor(id, first, last, email, phone, isMiuStudent, role, password, imgUrl, balance) {
+    this._id = id;
+    this.firstname = first;
+    this.lastname = last;
+    this.name = this.firstName + ' ' + this.lastName;
+    this.imgUrl = imgUrl || process.env.REACT_APP_IMG_URL;
+    this.email = email;
+    this.phone = phone;
+    this.isMiuStudent = isMiuStudent;
+    this.role = role || "user";
+    this.password = password;
+    this.balance = balance || 0;
+    this.attendances = [];
+  }
+
+  /**
+   * Given a username and password, will attempt to authenticate a user
+   *
+   * @static
+   * @param {string} email
+   * @param {string} password
+   * @returns {User} that was logged in, or null if not authenticated.
+   * @memberof User
+   */
+  static async LogInUser(email, password) {
+    let foundUser = null;
+
+    const response = await axios.post('/user/authenticate', { email: email, password: password });
+    console.log("authenticate response:", response);
+    let data = response.data;
+    if (data) {
+      foundUser = new User(data._id, data.firstname, data.lastname, data.email, data.phone, data.isMiuStudent, data.role, data.password, data.imgUrl);
+      console.log("foundUser:", foundUser);
     }
+    return foundUser;
+  }
+
+  /**
+   * Add user to database
+   *
+   * @static
+   * @param {User} user
+   * @returns {User | null} Returns newly added user, or null if failed due to existing user in system
+   * @memberof User
+   */
+  static async AddNewUser(user) {
+
+    const existsResponse = await axios.post('/user/exists', { email: user.email });
+    console.log("existsResponse", existsResponse);
+
+    if (existsResponse.data.userExists) { return null }
+
+    // add new user to all users
+    user.role = "user";
+    const createResponse = await axios.post('/user', user);
+    console.log("createUserResponse:", createResponse);
+    return createResponse.data;
+  }
+
+  /**
+   * Fetches list of all users in database
+   *
+   * @static
+   * @returns {[User]} Array of all Users in the database
+   * @memberof User
+   */
+  static async GetAllUsers() {
+    const response = await axios.get('/users');
+    console.log("get all users response:", response);
+    return Array.from(response.data) || [];
+  }
+
+  /**
+   * Remove user from database given user id
+   *
+   * @static
+   * @param {String} id
+   * @returns {Boolean} success
+   * @memberof User
+   */
+  static async DeleteUserById(id) {
+    const response = await axios.delete('/user/' + id);
+    console.log("response to DeleteUserById:", response);
+    return response.status === 201;
+  }
+
+  /**
+   * Update user information
+   *
+   * @static
+   * @param {User} user
+   * @returns {User} updated User object
+   * @memberof User
+   */
+  static async UpdateUser(user) {
+    const response = await axios.patch('/user', user);
+    console.log("updateUserResponse", response);
+    return response.data;
+  }
 }
