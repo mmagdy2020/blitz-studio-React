@@ -3,8 +3,6 @@ import './attendance.scss';
 
 // Mike:
 import LineProgress from '../sharedComponents/lineProgress';
-// import User from '../../../models/user';
-
 
 class Attendance extends Component {
   constructor(props) {
@@ -21,7 +19,6 @@ class Attendance extends Component {
   }
 
   render() {
-    // let user = new User();
     let user = this.props.user;
     let danceClasses = ['Salsa', 'Bachata', 'Connection Dance Workshops'];
 
