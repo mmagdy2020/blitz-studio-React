@@ -79,7 +79,7 @@ class AddClass extends Component {
             </div>
 
             <div className="form-group">
-              <label htmlFor="description">time:</label>
+              <label htmlFor="time">time:</label>
               <input className="form-control" name="time" id="time" type="time" value={this.state.time} onChange={(event)=>this.setState({time:event.target.value}) }></input>
             </div>
 

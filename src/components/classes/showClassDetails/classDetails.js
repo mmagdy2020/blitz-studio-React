@@ -1,41 +1,82 @@
-import React, { Component } from "react";
-// import axios from 'axios'
-// import { ThemeProvider } from "react-bootstrap";
-import {withRouter} from 'react-router-dom';
+import React, { Component } from 'react'
+import axios from 'axios';
+import { Card, ListGroup, ListGroupItem, Button } from "react-bootstrap"
+import { Link } from 'react-router-dom';
 
-class classDetails extends Component {
+export class classDetails extends Component {
+
+
 
     state = {
-        classInfo:null,
-        classID:this.props.postID
-
+        title: "",
+        instructor: "",
+        desc: "",
+        date: "",
+        time: "",
+        imgUrl: "",
+        // isSeries:  "",
+        // isDropInCLass: "",
+        // isPartOfSeries: ""
+    };
+    componentDidMount() {
+        axios.get("/classes/" + this.props.match.params.id).then(result => {
+            console.log(result)
+            this.setState({ title: result.data.title, desc: result.data.description, instructor: result.data.instructor, imgUrl: result.data.imgUrl, date: result.data.date, time: result.data.time })
+        }).catch(err => console.log(err))
     }
 
-componentDidMount(){
-  console.log(this.props.match.params)
-  // console.log(this.props.match.params)
-    // axios.get("http://localhost:4000/class/" + this.props.postID).then(result =>{
-    //   console.log(result)
-    //   this.setState({classInfo: result})
-    // }).catch(err=>console.log(err))
-}
 
+    updateClassDetailsHandeller = () => {
+        this.props.history.push(`/edit-class/${this.props.match.params.id}`);
+    }
+    deleteClassDetailsHandeller = () => {
 
-  render() {
+        axios.delete("/classes/" + this.props.match.params.id).then(result => {
+            console.log(result)
 
-    console.log(this.state.classID)
-
-
-    if(this.state.classInfo){
-      console.log(this.state.classInfo)
-
+            // redirect .... 
+        }).catch(err => console.log(err))
     }
 
-    return (
-    <div>
-    </div>                                                                 
-    )
-  }
+
+
+
+    render() {
+
+
+        return ( 
+            <center >
+            <Card style = {{ width: '18rem' } } >
+            <Card.Img variant = "top" src = {this.state.imgUrl} /> 
+            <Card.Body>
+            <Card.Title > { this.state.title } </Card.Title> 
+            <Card.Text > { this.state.desc } </Card.Text> 
+            </Card.Body> 
+            <ListGroup className = "list-group-flush" >
+            <ListGroupItem > { this.state.instructor } </ListGroupItem> 
+            <ListGroupItem > D { this.state.date } </ListGroupItem> 
+            <ListGroupItem > { this.state.time } </ListGroupItem> 
+            </ListGroup> 
+            <Card.Body >
+
+            <Button onClick = {() => this.updateClassDetailsHandeller() } > Update! </Button>
+
+            { /* <Link to="/classes" ><Button onClick={()=>this.deleteClassDetailsHandeller()}>Delete!</Button></Link>  */ }
+
+            <Link to = "/classes"> <Button onClick = {() => this.deleteClassDetailsHandeller() } > Delete! </Button></Link>
+
+            </Card.Body>
+             </Card>
+
+            </center>
+
+
+
+
+
+        )
+
+    }
 }
 
-export default withRouter(classDetails);
+export default classDetails
