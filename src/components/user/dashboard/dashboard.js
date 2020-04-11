@@ -4,6 +4,7 @@ import UserDetail from '../userDetail/userDetail';
 import UserList from '../userList/userList';
 import EditUser from '../editUser/editUser';
 import User from '../../../models/user';
+import FetchClasses from '../../classes/showClasses/fetchClass';
 
 // Mike: 
 import Checkin from '../../attendanceRecord/checkin/checkin';
@@ -18,12 +19,9 @@ export default class Dashboard extends React.Component {
     this.state = { users: [], mode: "view", selectedUser: null };
 
   }
-  async componentDidUpdate() {
-    if (this.props.user.role === "admin" && this.state.users.length === 0) {
-      let users = await User.GetAllUsers();
-      this.setState({ users: users });
-    }
-  }
+  /**
+   * Dashboard event handlers
+   */
   async onClickDeleteUser(user) {
     const question = (user._id === this.props.user._id) ? "Deleting your account will log you out. Are you sure you want to delete your account?" : "Are you sure you want to delete the user " + user.firstname;
     let confirmation = window.confirm(question);
@@ -31,7 +29,7 @@ export default class Dashboard extends React.Component {
     if (confirmation) {
       const success = await User.DeleteUserById(user._id);
       // console.log("delete by id response:", response);
-      if (success){
+      if (success) {
         if (user._id === this.props.user._id) {
           this.props.onUserChange(user);
         } else {
@@ -61,7 +59,7 @@ export default class Dashboard extends React.Component {
       if (this.props.user._id === formUser._id) {
         // console.log("Edited active user.")
         this.props.onUserChange(updatedUser);
-        this.setState({mode: "view"});
+        this.setState({ mode: "view" });
       } else {
         // console.log("admin changed another user");
         let users = await User.GetAllUsers();
@@ -71,7 +69,32 @@ export default class Dashboard extends React.Component {
       alert("Changes weren't saved.");
     }
   }
-  // props includes user with current user object. See /components/user/user.model.js
+  /**
+  * Admin Panel event handlers and data fetchers
+  */
+  onClickStudentCheckIn(event){
+    if (this.state.users.length===0){
+      this.getUsersData();
+    }
+  }
+  onClickUserManager(event) {
+    if (this.state.users.length === 0) {
+      this.getUsersData();
+    }
+  }
+  onClickClassesManager(event) {
+    if (this.state.users.length === 0) {
+      //  TODO: Add call to get classes
+    }
+  }
+  async getUsersData(){
+    if (this.props.user.role === "admin" && this.state.users.length === 0) {
+      let users = await User.GetAllUsers();
+      this.setState({ users: users });
+    }
+  }
+
+
   render() {
     let dash;
     if (!this.props.user) {
@@ -99,26 +122,48 @@ export default class Dashboard extends React.Component {
       dash = (<div className="container">
 
         <h1>{this.props.user.firstname}'s Dashboard</h1>
-        <hr></hr>
-        <h2>Student Check in</h2>
-        <hr></hr>
-        <h2>User Manager</h2>
-        {/* <UserList users={this.state.users}></UserList> */}
-        {this.state.mode === "edit" ? <EditUser user={this.state.selectedUser} hasAdminAccess={true} onUserChange={user => this.onSaveChangesToEditUser(user)} onCancel={_ => this.setState({ mode: "view" })} ></EditUser> : <UserList users={this.state.users} onClickDelete={user => this.onClickDeleteUser(user)} onClickEdit={user => this.onClickEditUser(user)} />}
-
-
-        <hr></hr>
-        <h2>All Classes</h2>
-        <hr></hr>
-        <h2>Attendance Report</h2>
-        <hr></hr>
-        <AttendanceList users={this.state.users} />
-
+        <div id="accordion">
+          <div className="card">
+            <div className="card-header" id="headingOne">
+              <h2 className="mb-0">
+                <button className="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" onClick={event=>{this.onClickStudentCheckIn(event)}}>Student Check-in</button>
+              </h2>
+            </div>
+            <div id="collapseOne" className="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+              <div className="card-body">
+                <AttendanceList users={this.state.users} />
+              </div>
+            </div>
+          </div>
+          <div className="card">
+            <div className="card-header" id="headingTwo">
+              <h5 className="mb-0">
+                <button className="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" onClick={event => { this.onClickUserManager(event) }}>
+                  User Manager
+                </button>
+              </h5>
+            </div>
+            <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+              <div className="card-body">
+                {this.state.mode === "edit" ? <EditUser user={this.state.selectedUser} hasAdminAccess={true} onUserChange={user => this.onSaveChangesToEditUser(user)} onCancel={_ => this.setState({ mode: "view" })} ></EditUser> : <UserList users={this.state.users} onClickDelete={user => this.onClickDeleteUser(user)} onClickEdit={user => this.onClickEditUser(user)} />}
+              </div>
+            </div>
+          </div>
+          <div className="card">
+            <div className="card-header" id="headingThree">
+              <h5 className="mb-0">
+                <button className="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">Class Manager</button>
+              </h5>
+            </div>
+            <div id="collapseThree" className="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+              <div className="card-body">
+                All the classes go here
+                {/* <FetchClasses /> */}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>)
-
-      // <all student check-in>
-      // <attendance-viewer>
-      // <classes-viewer with CRUD>
     }
     return (<div id="dashboard" >
       {dash}
