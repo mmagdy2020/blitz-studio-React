@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 // import { Form,Button} from "react-bootstrap";
-import {Link} from "react-router-dom"
-import axios from "axios";
+// import {Link} from "react-router-dom"
+// import axios from "axios";
+import { connect } from 'react-redux'
+import {createClassAsync}from '../store/classState/classAction'
 
 
 
-class AddClass extends Component {
+
+class AddClassRedux extends Component {
   state = {
     title: "",
     instructor: "",
@@ -18,29 +21,14 @@ class AddClass extends Component {
     // isPartOfSeries: ""
   };
 
-  componentDidMount () {
-    console.log(this.props);
-}
 
  addClassHandler =()=> {
-    const data =  {
-        title: this.state.title,
-        instructor: this.state.instructor,
-        description: this.state.description,
-        date: this.state.date,
-        time: this.state.time,
-        imgUrl: this.state.imgUrl,
-        // isSeries: this.state.isSeries,
-        // isDropInCLass: this.state.isDropInCLass,
-        // isPartOfSeries: this.state.isPartOfSeries
-    };
 
-    console.log(data)
-   axios.post('/classes', data)
-        .then(response => { 
-          this.props.history.push('/classes')  // Bug fised by pushing to History..
-            console.log(response);
-        });
+    console.log(this.props)
+    this.props.onCreateClass(this.state)
+        setTimeout(() => {
+      this.props.history.push('/classes')}, 500); // To aviod loading the page without refreshing it...
+  
 }
 
   render() {
@@ -85,13 +73,6 @@ class AddClass extends Component {
             </div>
 
 
-            {/* <div className="form-check">
-              <input className="form-check-input" name="isMiuStudent" id="isMiuStudent" type="checkbox" checked={this.state.isMiuStudent} onChange={ }></input>
-              <label className="form-check-label" htmlFor="isMiuStudent">Current MIU Student</label>
-            </div>
-            <hr></hr> */}
-
-
             <div className="form-group">
             {/* <button type="button" className="btn btn-outline-primary" onClick={this.addClassHandler}>Submit!</button> */}
               
@@ -105,4 +86,12 @@ class AddClass extends Component {
   }
 }
 
-export default AddClass;
+
+const mapDispatchToProps = (dispatch) => {
+
+    return {
+      onCreateClass: (dClass) => dispatch(createClassAsync(dClass))
+  
+    }
+  }
+export default connect(null,mapDispatchToProps)(AddClassRedux);
