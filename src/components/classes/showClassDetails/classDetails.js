@@ -61,16 +61,12 @@ export class classDetails extends Component {
 
             { /* <Link to="/classes" ><Button onClick={()=>this.deleteClassDetailsHandeller()}>Delete!</Button></Link>  */ }
 
-            <Link to = "/classes" > <Button onClick = {() => this.deleteClassDetailsHandeller() } > Delete! </Button></Link>
+            <Link to = "/classes"> <Button onClick = {() => this.deleteClassDetailsHandeller() } > Delete! </Button></Link>
 
             </Card.Body>
              </Card>
 
             </center>
-
-
-
-
 
         )
 

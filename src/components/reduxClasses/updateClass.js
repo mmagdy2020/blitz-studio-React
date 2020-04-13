@@ -1,51 +1,40 @@
 import React, { Component } from 'react'
-import axios from 'axios';
-// import {Card, ListGroup,ListGroupItem, Button} from "react-bootstrap"
-import { Link } from "react-router-dom"
-
-export class UpdateClass extends Component {
+import { connect } from 'react-redux'
+import { getUpdateClass, getClassDetails } from '../store/classState/classAction'
 
 
 
-  state = {
-    fetch: false,
-    title: "",
-    instructor: "",
-    description: "",
-    date: "",
-    time: "",
-    imgUrl: "",
-    // isSeries:  "",
-    // isDropInCLass: "",
-    // isPartOfSeries: "",
-  };
+class UpdateClass extends Component {
+  //Intilie the state to be the choosen Class...
+  state = this.props.location.state.class
 
-  componentDidMount() {
-    axios.get("/classes/" + this.props.match.params.id).then(result => {
-      console.log(result)
-      this.setState({ title: result.data.title, description: result.data.description, instructor: result.data.instructor, imgUrl: result.data.imgUrl, date: result.data.date, time: result.data.time })
-    }).catch(err => console.log(err))
+  updateClassHandeller() {
+    console.log(this.props )
+    //Dispatch updateClass 
+    this.props.onUpdateClass(this.state._id, this.state)
+    setTimeout(() => {
+      this.props.history.push('/classes')}, 500); // To aviod loading the page without refreshing it...
   }
 
 
 
-  updateClassHandeller() {
+  componentDidMount() {
+    // console.log("hi2")
     console.log(this.props.match.params.id)
-    console.log(this.state.title)
-    axios.patch("/classes/" + this.props.match.params.id, this.state).then(result => {
-      // this.props.history.push('/classes');
-      console.log(result)
-
-    }).catch()
-
+    console.log(this.props.location.state.class._id)
+    let id = this.props.location.state.class._id
+    this.props.onGetClass(id)  // Props.class (The Entire Object)...
   }
 
   render() {
+    console.log(this.props)
+
 
     return (
 
 
       <div id="sign-up">
+        
         <div className="container">
           <h1>update a  {} class</h1>
           <form>
@@ -83,8 +72,7 @@ export class UpdateClass extends Component {
 
             <div className="form-group">
 
-              <Link to="/classes"><button type="button" className="btn btn-outline-primary" onClick={() => this.updateClassHandeller()}>Update!</button></Link>
-
+              <button type="button" className="btn btn-outline-primary" onClick={() => this.updateClassHandeller()}>Update!</button>
 
             </div>
           </form>
@@ -92,9 +80,23 @@ export class UpdateClass extends Component {
       </div>
 
     )
-
   }
 }
 
-export default UpdateClass
 
+// No need for this mapping....
+const mapStateToProps = (state) => {
+  return {
+    class: state.clss.class,
+    classes: state.clss.classes
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onGetClass: (id) => dispatch(getClassDetails(id)),
+    onUpdateClass: (id, classUpdated) => dispatch(getUpdateClass(id, classUpdated))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UpdateClass)
