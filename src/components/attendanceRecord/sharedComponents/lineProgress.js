@@ -1,35 +1,25 @@
 import React, { Component } from "react";
 import { Line } from 'rc-progress';
-import CircleImgWithName from '../sharedComponents/circleImg';
+// import CircleImgWithName from './circleImg';
+import CircleImg from './circleImg'
 
 class LineProgress extends Component {
 
     render() {
         let user = this.props.user;
-        user.attendance = 10;
-
+        // user.attendance = 10;
+        console.log('user in LinProgress: ', user)
 
         let progress = (
             <div className="progress-line">
-                <CircleImgWithName user={user} />
+                <CircleImg user={user} />
+                <p>{user.firstname}</p>
                 <Line
                     percent={user.attendance}
                     strokeWidth={4}
                     strokeColor="#4caf50"
                 />
                 <span>Bachata</span>
-                <Line
-                    percent={user.attendance}
-                    strokeWidth={4}
-                    strokeColor="#fd7e14"
-                />
-                <span>{this.props.caption}</span>
-                <Line
-                    percent={user.attendance}
-                    strokeWidth={4}
-                    strokeColor="#17a2b8"
-                />
-                <span>Connection Dance Workshop</span>
             </div>
         );
         return (

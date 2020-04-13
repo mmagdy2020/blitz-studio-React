@@ -5,7 +5,7 @@ import User from '../user.model';
 
 // Mike: 
 import Checkin from '../../attendanceRecord/checkin/checkin';
-import AttendanceList from '../../attendanceRecord/attendance/attendanceList';
+import UserListWithAttendance from '../../attendanceRecord/attendance/userListWithAttendance';
 // import Attendance from '../../attendanceRecord/attendance/attendance';
 
 export default class Dashboard extends React.Component {
@@ -58,7 +58,7 @@ export default class Dashboard extends React.Component {
         <hr></hr>
         <h2>Attendance Report</h2>
         <hr></hr>
-        <AttendanceList users={this.state.users}/>
+        <UserListWithAttendance users={this.state.users}/>
 
       </div>)
 

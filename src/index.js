@@ -6,15 +6,10 @@ import axios from 'axios';
 
 // Mike: Loading environmental variables
 require('dotenv').config();
-console.log('process.env.REACT_APP_REST_URI : ', process.env.REACT_APP_REST_URI);
 
-// axios.defaults.baseURL = process.env.REACT_APP_REST_URI;
+axios.defaults.baseURL = process.env.REACT_APP_REST_URL || "https://blitz-studio-rest.azurewebsites.net";
 
-// axios.defaults.baseURL = "https://blitz-studio-rest.azurewebsites.net"
-
-//Mo - adding Local Url
-axios.defaults.baseURL = process.env.REACT_APP_REST_URI || "https://blitz-studio-rest.azurewebsites.net";
-
+console.log('axios.defaults.baseURL : ', axios.defaults.baseURL)
 ReactDOM.render(
     <React.StrictMode>
       <App />

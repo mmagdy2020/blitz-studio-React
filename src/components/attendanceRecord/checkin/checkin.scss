@@ -2,6 +2,7 @@ $blueColor: #3498db;
 $greenColor: #4caf50;
 $btnBorderRadius: 0px;
 $borderRadius: 0px;
+
 * {
     box-sizing: border-box;
 }
@@ -49,14 +50,25 @@ $borderRadius: 0px;
     padding: 10px;
     width: 100% !important;
 }
+
 .btn-checkin:hover {
     background-color: $blueColor;
     color: white;
 }
 
-.btn{
+.btn {
     border-radius: $btnBorderRadius;
 }
+
+.checkedin-success {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+}
+.mycheckedin-classes{
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+}
+
 @media(max-width: 600px) {
 
     .classes {

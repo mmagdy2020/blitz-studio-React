@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import './checkin.scss';
-import axios from 'axios';
+import { getClasses, getUserAttendance, createAttendance } from '../helper';
 
 // Mike:
 import ComingSoon from '../sharedComponents/comingSoon';
-import CircleProgress from '../sharedComponents/circleProgress';
-import Attendance from '../attendance/attendance';
+import CheckinSuccessView from './checkinSuccessView';
+import UserListWithAttendance from '../attendance/userListWithAttendance';
 
 class Checkin extends Component {
   constructor(props) {
@@ -13,21 +13,18 @@ class Checkin extends Component {
     this.state = {
       danceClasses: [],
       viewDetails: false,
-      isCheckedIn: false
+      isCheckedIn: false,
+      checkedInClasses: [],
+      userAttendances: []
     };
 
   }
-  
-  async componentDidMount() {
-    let response = await axios.get(axios.defaults.baseURL + '/classes');
 
+   async onDanceClassInfoDivClick(event, classId) {
     this.setState((state, props) => ({
-      danceClasses: response.data
-    }));
-  }
-
-  componentDidUpdate() {
-    console.log(this.state)
+      checkedInClasses: [...state.checkedInClasses, { classId: classId, checkedIn: true }]
+    })
+    );
   }
 
   onLearnMoreBtnClick() {
@@ -36,37 +33,57 @@ class Checkin extends Component {
     this.setState(stateCoppy);
   }
 
-  onCheckinBtnClick() {
-    let stateCoppy = { ...this.state };
-    stateCoppy.isCheckedIn = !this.state.isCheckedIn;
-    this.setState(stateCoppy);
+  async onCheckinBtnClick() {
+    // creating attendance record for each classes
+    let userId = this.props.user._id;
+    await createAttendance(this.state.checkedInClasses, userId);
+
+    this.setState((state, props) => ({
+      isCheckedIn: true
+    }));
+  }
+
+  async componentDidMount() {
+    let classes = await getClasses();
+    console.log('classes : ', classes);
+
+    let attendances = await getUserAttendance(this.props.user._id);
+    console.log('user attendances: ', attendances);
+
+    this.setState((state, props) => ({
+      danceClasses: classes,
+      userAttendances: attendances
+    }));
+  }
+
+  componentDidUpdate() {
+    console.log('state: ', this.state);
   }
 
   render() {
+    let user = this.props.user;
+    let classesForTheDay = this.state.danceClasses;
     let classesForTheDayView;
     let checkinBtn;
-    let checkedInView;
-    let user = this.props.user;
-    user.attendance = 60;
-    let classesForTheDay = this.state.danceClasses;
+    let afterLoginView;
+
+    user.checkedInClasses = this.state.checkedInClasses;
+    
 
     if (user.role === 'admin') {
-      checkedInView = <Attendance
-        title='Checked in view'
-        user={user} />
+      afterLoginView = <UserListWithAttendance user={user} />
     } else if (this.state.isCheckedIn) {
-      checkedInView = <CircleProgress
-        title='Checked in view'
-        user={user}
-      />
+      afterLoginView = <CheckinSuccessView user={user} />
     } else if (this.state.viewDetails) {
-      classesForTheDayView = <ComingSoon title='This is the class details view' />;
+      classesForTheDayView = <ComingSoon />
     } else {
-      console.log(classesForTheDay)
       if (classesForTheDay) {
         classesForTheDayView = <div className="classes">
           {classesForTheDay.map(c => <div key={c._id} className="dance-class">
-            <div className="dance-class-info">
+
+            <div
+              className="dance-class-info"
+              onClick={(event) => this.onDanceClassInfoDivClick(event, c._id)}>
               <div>
                 <img src={c.imgUrl} alt="salsa dance" />
               </div>
@@ -102,7 +119,7 @@ class Checkin extends Component {
 
         {checkinBtn}
 
-        {checkedInView}
+        {afterLoginView}
       </div>
     );
   }

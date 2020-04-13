@@ -1,4 +1,5 @@
 import React from 'react';
+import './sharedComponent.scss';
 
 const SearchWithBtn = (props) => {
     return (
