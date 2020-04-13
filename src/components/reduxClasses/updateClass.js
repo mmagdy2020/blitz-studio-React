@@ -15,18 +15,16 @@ class UpdateClass extends Component {
   }
 
 
-  
-  componentDidMount() {
-    // console.log(this.props.match.params.id)
-    // console.log(this.props.location.state.class._id)
-    // let id = this.props.location.state.class._id
 
-    // Props.class (The Entire Object)...
-    // this.props.onGetClass(id)  
-  }
+  // componentDidMount() {
+  //   // console.log("hi2")
+  //   console.log(this.props.match.params.id)
+  //   console.log(this.props.location.state.class._id)
+  //   let id = this.props.location.state.class._id
+  //   this.props.onGetClass(id)  // Props.class (The Entire Object)...
+  // }
 
   render() {
-
 
     return (
 
