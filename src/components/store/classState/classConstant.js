@@ -1,0 +1,5 @@
+// export const CREATE_CLASS = 'CREATE_CLASS'
+// export const UPDATE_CLASS = 'UPDATE_CLASS'
+// export const DELETE_CLASS = 'DELETE_CLASS'
+// export const INIT_CLASS = 'INIT_CLASS'
+// export const GET_CLASS = 'GET_CLASS'
