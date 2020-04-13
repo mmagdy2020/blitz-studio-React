@@ -24,7 +24,8 @@ console.log('process.env.REACT_APP_REST_URI : ', process.env.REACT_APP_REST_URI)
 // axios.defaults.baseURL = "https://blitz-studio-rest.azurewebsites.net"
 
 //Mo - adding Local Url
-axios.defaults.baseURL = 'http://localhost:4000'
+axios.defaults.baseURL = process.env.REACT_APP_REST_URI || "https://blitz-studio-rest.azurewebsites.net";
+// axios.defaults.baseURL = "http://localhost:4000";
 
 
 //MO - ADD UR REDUCER

@@ -79,7 +79,7 @@ export default class Main extends React.Component {
           </Route>
 
           <Route path="/dashboard">
-            <Dashboard user={this.state.user} />
+            <Dashboard user={this.state.user} onUserChange={(user) => { this.setUser(user) }} />
           </Route>
           <Route path="/signup">
             <SignUp onUserLoggedIn={(user) => { this.setUser(user) }} />
