@@ -24,8 +24,6 @@ $borderRadius: 0px;
 .dance-class-info:hover {
     transform: scale(.99);
     cursor: pointer;
-    background-color: $greenColor;
-    color: white;
     font-weight: bold;
 }
 
@@ -69,6 +67,10 @@ $borderRadius: 0px;
     grid-template-columns: repeat(1, 1fr);
 }
 
+.checked-dance-class {
+    background-color: $greenColor;
+    color: white;
+}
 @media(max-width: 600px) {
 
     .classes {

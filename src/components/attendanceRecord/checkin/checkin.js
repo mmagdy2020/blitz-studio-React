@@ -15,15 +15,24 @@ class Checkin extends Component {
       viewDetails: false,
       isCheckedIn: false,
       checkedInClasses: [],
-      userAttendances: []
+      attendances: []
     };
 
   }
 
-   async onDanceClassInfoDivClick(event, classId) {
-    this.setState((state, props) => ({
-      checkedInClasses: [...state.checkedInClasses, { classId: classId, checkedIn: true }]
-    })
+  async onDanceClassClick(event, classId) {
+    const checkedInClassesCoppy = [...this.state.checkedInClasses];
+    let foundIndex = checkedInClassesCoppy.findIndex(c => c.classId === classId);
+    console.log('foundIndex...', foundIndex);
+    if (foundIndex === -1) {
+      checkedInClassesCoppy.push({ classId: classId, checkedIn: true })
+    } else {
+      checkedInClassesCoppy.splice(foundIndex, 1);
+    }
+
+    this.setState({
+      checkedInClasses: checkedInClassesCoppy
+    }
     );
   }
 
@@ -37,6 +46,8 @@ class Checkin extends Component {
     // creating attendance record for each classes
     let userId = this.props.user._id;
     await createAttendance(this.state.checkedInClasses, userId);
+
+    // let attendances = await getUserAttendance(userId);
 
     this.setState((state, props) => ({
       isCheckedIn: true
@@ -52,7 +63,7 @@ class Checkin extends Component {
 
     this.setState((state, props) => ({
       danceClasses: classes,
-      userAttendances: attendances
+      attendances: attendances
     }));
   }
 
@@ -68,7 +79,8 @@ class Checkin extends Component {
     let afterLoginView;
 
     user.checkedInClasses = this.state.checkedInClasses;
-    
+    user.attendances = this.state.attendances;
+
 
     if (user.role === 'admin') {
       afterLoginView = <UserListWithAttendance user={user} />
@@ -82,8 +94,8 @@ class Checkin extends Component {
           {classesForTheDay.map(c => <div key={c._id} className="dance-class">
 
             <div
-              className="dance-class-info"
-              onClick={(event) => this.onDanceClassInfoDivClick(event, c._id)}>
+              className={this.state.checkedInClasses.find(cdc => cdc.classId === c._id) ? "dance-class-info checked-dance-class" : "dance-class-info"}
+              onClick={(event) => this.onDanceClassClick(event, c._id)}>
               <div>
                 <img src={c.imgUrl} alt="salsa dance" />
               </div>
