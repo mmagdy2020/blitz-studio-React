@@ -54,10 +54,7 @@ const classReducer = (state = intiState, action) => {
             return {
                 ...state,
                 classes : updatedOne.concat(action.payload)
-           
             }
-
-
         default:
             return state
 

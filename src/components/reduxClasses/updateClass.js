@@ -3,13 +3,11 @@ import { connect } from 'react-redux'
 import { getUpdateClass, getClassDetails } from '../store/classState/classAction'
 
 
-
 class UpdateClass extends Component {
-  //Intilie the state to be the choosen Class...
+  //Intilie the state to be the choosen Class Passing using <Link state :{} >
   state = this.props.location.state.class
 
   updateClassHandeller() {
-    console.log(this.props )
     //Dispatch updateClass 
     this.props.onUpdateClass(this.state._id, this.state)
     setTimeout(() => {
@@ -17,21 +15,20 @@ class UpdateClass extends Component {
   }
 
 
-
+  
   componentDidMount() {
-    // console.log("hi2")
-    console.log(this.props.match.params.id)
-    console.log(this.props.location.state.class._id)
-    let id = this.props.location.state.class._id
-    this.props.onGetClass(id)  // Props.class (The Entire Object)...
+    // console.log(this.props.match.params.id)
+    // console.log(this.props.location.state.class._id)
+    // let id = this.props.location.state.class._id
+
+    // Props.class (The Entire Object)...
+    // this.props.onGetClass(id)  
   }
 
   render() {
-    console.log(this.props)
 
 
     return (
-
 
       <div id="sign-up">
         
@@ -83,18 +80,17 @@ class UpdateClass extends Component {
   }
 }
 
-
 // No need for this mapping....
 const mapStateToProps = (state) => {
   return {
-    class: state.clss.class,
+    // class: state.clss.class,
     classes: state.clss.classes
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onGetClass: (id) => dispatch(getClassDetails(id)),
+    // onGetClass: (id) => dispatch(getClassDetails(id)),
     onUpdateClass: (id, classUpdated) => dispatch(getUpdateClass(id, classUpdated))
   }
 }

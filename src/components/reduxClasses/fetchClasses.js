@@ -21,6 +21,7 @@ class showReuxClass extends Component {
   render() {
 
     return (
+
       <Container>
         <Row>
 
@@ -56,9 +57,8 @@ class showReuxClass extends Component {
           }
 
         </Row>
-
-      </Container>)
-
+      </Container>
+    )
   }
 }
 
