@@ -5,53 +5,55 @@ import CircleImg from '../sharedComponents/circleImg';
 import AttendanceEditForm from './attendanceEditForm';
 import { groupDuplicates } from '../helper';
 
-const danceClasses = {
-  "5e910fbd512ace828c4defd0": "SALSA"
-}
-
-class Attendance extends Component {
-  state = {
-    date: new Date()
-  };
-
-  render() {
-    let user = this.props.user;
-
-    let userProfile = <div className="img">
-      <CircleImg user={user} caption='Bachata' />
-      <p>{user.firstname + ' ' + user.lastname}</p>
-    </div>;
-
-    let attendanceTracker;
-    if (user.attendances.length > 0) {
-      user.attendances = groupDuplicates(user.attendances);
-
-      attendanceTracker = user.attendances.map(attendance => (
-        <div key={attendance.classId} className="attendance-tracker">
-          <Line 
-            percent={attendance.count}
-            strokeWidth={2}
-            strokeColor="#4caf50"
-          />
-          <span>{danceClasses[attendance.classId]}</span>
-        </div>)
-      );
-    }
 
 
-      return (
-        <div className="user-attendance">
-          {userProfile}
+const Attendance = (props) => {
+  const danceClasses = props.danceClasses;
+  const user = props.user;
 
-          <div className="form-attendance-tracker">
-            <AttendanceEditForm user={user} />
+  let userProfile = <div className="img">
+    <CircleImg user={user} caption='Bachata' />
+    <p>{user.firstname + ' ' + user.lastname}</p>
+  </div>;
 
-            {attendanceTracker}
-          </div>
+  let attendanceTracker;
+  if (user.attendances.length > 0) {
+    user.attendances = groupDuplicates(user.attendances);
 
-        </div>
-      );
-    }
+    attendanceTracker = user.attendances.map(attendance => {
+      let dc = danceClasses.find(c => c._id === attendance.classId);
+
+      return <div key={attendance.classId} className="attendance-tracker">
+        <Line
+          percent={attendance.count}
+          strokeWidth={2}
+          strokeColor="#4caf50"
+        />
+        <span>{dc ? dc.title : ''}</span>
+      </div>
+    });
   }
 
-  export default Attendance;
+
+  return (
+    <div className="user-attendance">
+      {userProfile}
+
+      <div className="form-attendance-tracker">
+        <AttendanceEditForm
+          danceClasses={props.danceClasses}
+          user={user}
+          attendanceDate={props.attendanceDate}
+          attendedClass={props.attendedClass}
+          onAttendanceEditInputChange={props.onAttendanceEditInputChange}
+          onSaveBtnClick={props.onSaveBtnClick} />
+
+        {attendanceTracker}
+      </div>
+
+    </div>
+  );
+}
+
+
+export default Attendance;

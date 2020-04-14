@@ -11,7 +11,7 @@ class Checkin extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      danceClasses: [],
+      classesForTheDay: [],
       viewDetails: false,
       isCheckedIn: false,
       checkedInClasses: [],
@@ -20,7 +20,7 @@ class Checkin extends Component {
 
   }
 
-  async onDanceClassClick(event, classId) {
+  onDanceClassClick = async(event, classId) => {
     const checkedInClassesCoppy = [...this.state.checkedInClasses];
     let foundIndex = checkedInClassesCoppy.findIndex(c => c.classId === classId);
     console.log('foundIndex...', foundIndex);
@@ -36,13 +36,13 @@ class Checkin extends Component {
     );
   }
 
-  onLearnMoreBtnClick() {
+  onLearnMoreBtnClick = () =>{
     let stateCoppy = { ...this.state };
     stateCoppy.viewDetails = !this.state.viewDetails;
     this.setState(stateCoppy);
   }
 
-  async onCheckinBtnClick() {
+  onCheckinBtnClick = async () => {
     // creating attendance record for each classes
     let userId = this.props.user._id;
     await createAttendance(this.state.checkedInClasses, userId);
@@ -53,6 +53,8 @@ class Checkin extends Component {
       isCheckedIn: true
     }));
   }
+
+
 
   async componentDidMount() {
     let classes = await getClasses();
@@ -73,17 +75,18 @@ class Checkin extends Component {
 
   render() {
     let user = this.props.user;
-    let classesForTheDay = this.state.danceClasses;
+    let classesForTheDay = this.state.classesForTheDay;
     let classesForTheDayView;
     let checkinBtn;
     let afterLoginView;
 
     user.checkedInClasses = this.state.checkedInClasses;
     user.attendances = this.state.attendances;
+    user.balance = 100;
 
 
     if (user.role === 'admin') {
-      afterLoginView = <UserListWithAttendance user={user} />
+      afterLoginView = <UserListWithAttendance user={user}  />
     } else if (this.state.isCheckedIn) {
       afterLoginView = <CheckinSuccessView user={user} />
     } else if (this.state.viewDetails) {

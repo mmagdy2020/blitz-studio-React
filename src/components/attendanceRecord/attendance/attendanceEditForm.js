@@ -2,29 +2,46 @@ import React from 'react';
 
 const AttendanceEditForm = (props) => {
     let user = props.user;
-    let danceClasses = ['Salsa', 'Bachata', 'Connection Dance Workshops'];
+    // let danceClasses = ['SALSA', 'BACHATA', 'CONNECTION DANCE WORKSHOP'];
+    console.log(props)
+    let danceClasses = props.danceClasses;
+    let options = danceClasses.map(c => <option value={c._id}>{c.title}</option>);
+
     return (
-        <div className="atendance-edit-form">
+        <form className="atendance-edit-form">
             <div className="attendance-classoptions">
-                <select className="form-control" >
-                    <option>{danceClasses[0]}</option>
-                    <option>{danceClasses[1]}</option>
-                    <option>{danceClasses[2]}</option>
+                <select
+                    required
+                    className="form-control"                    
+                    name="attendedClass"
+                    value={props.attendedClass}
+                    onChange={(event) => props.onAttendanceEditInputChange(event)}>
+                    
+                    <option >---select---</option>
+                    {options}
                 </select>
 
             </div>
 
             <div className="user-attendance-item">
                 <input
+                    required
                     className="form-control"
-                    type="date" />
+                    type="date"
+                    max='04/13/2020'
+                    name="attendanceDate"
+                    value={props.attendanceDate}
+                    onChange={(event) => props.onAttendanceEditInputChange(event, user._id)}
+                />
             </div>
 
             <div className="user-attendance-item">
-                <button className="btn btn-success">Checkin</button>
+                <button type="submit" className="btn btn-success"
+                    onClick={(event) => props.onSaveBtnClick(event, user)}
+                >Save</button>
             </div>
 
-        </div>
+        </form>
     );
 }
 

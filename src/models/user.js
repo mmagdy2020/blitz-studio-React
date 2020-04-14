@@ -10,9 +10,10 @@ export default class User {
         this.email = email;
         this.password = pw;
         this.isMiuStudent = isMiuStudent;
-        this.balance = balance;
+        this.balance = balance||0;
         this.role = role || 'user';
         this.attendances = [];
     
     }
+
 }
