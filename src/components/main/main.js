@@ -8,12 +8,16 @@ import Contact from '../pages/contact';
 import LogIn from '../user/login/login';
 import Dashboard from '../user/dashboard/dashboard';
 import SignUp from '../user/signup/signup';
-import AddClass from "../classes/addClass/addClass";
-import ShowClasses from "../classes/showClasses/fetchClass";
-import UpdateClass from "../classes/editClass";
-import ClassDetails from '../classes/showClassDetails/classDetails';
+// import AddClass from "../classes/addClass/addClass";
+// import ShowClasses from "../classes/showClasses/fetchClass";
+// import UpdateClass from "../classes/editClass";
+// import ClassDetails from '../classes/showClassDetails/classDetails';
 
-
+//testing
+import fetchClassRedux from '../reduxClasses/fetchClasses'
+import classDetailsRedux from '../reduxClasses/classDetails'
+import updateClassRedux from '../reduxClasses/updateClass'
+import addClassReduc from  '../reduxClasses/addClass'
 
 export default class Main extends React.Component {
   constructor(props) {
@@ -37,10 +41,16 @@ export default class Main extends React.Component {
             <Calendar />
           </Route>
 
-          <Route exact path = "/classes" component={ShowClasses}/>
+
+          <Route exact path = "/classes" component={fetchClassRedux}/>
+          <Route exact path = "/classes/:id" component={classDetailsRedux}/>
+          <Route exact path = "/edit-class/:id" component ={updateClassRedux}/>
+          <Route exact path ="/add-class" component ={addClassReduc}/>
+
+          {/* <Route exact path = "/classes" component={ShowClasses}/>
           <Route exact path = "/edit-class/:id" component ={UpdateClass}/>
           <Route exact path = "/classes/:id" component={ClassDetails}/>
-          <Route exact path ="/add-class" component ={AddClass}/>
+          <Route exact path ="/add-class" component ={AddClass}/> */}
 
           {/* <Route exact path = "/classes" component={Classes}/> */}
           <Route exact path="/classes/bachata" component={Contact} />
@@ -69,7 +79,7 @@ export default class Main extends React.Component {
           </Route>
 
           <Route path="/dashboard">
-            <Dashboard user={this.state.user} />
+            <Dashboard user={this.state.user} onUserChange={(user) => { this.setUser(user) }} />
           </Route>
           <Route path="/signup">
             <SignUp onUserLoggedIn={(user) => { this.setUser(user) }} />

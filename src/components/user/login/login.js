@@ -1,5 +1,5 @@
 import React from 'react';
-import User from '../user.model';
+import User from '../../../models/user';
 import './login.css';
 import {
   withRouter
@@ -22,15 +22,15 @@ class LogIn extends React.Component {
   }
   async onClickLogIn(event) {
 
-    // TODO: Authenticate with server
+    // Authenticate with server
     const user = await User.LogInUser(this.state.username, this.state.password);
 
     if (!user) {
-      // TODO: on failure
-      console.log("error here")
+      // on failure
+      console.log("error:",user);
 
-      // TODO: show error
-      alert("Username and password combination is invalid. Try again");
+      // show error
+      alert("Username and password combination is invalid. Try again.");
 
     } else {
       // on successful log in
@@ -39,8 +39,6 @@ class LogIn extends React.Component {
       this.props.onUserLoggedIn(user);
     }
 
-
-    // console.log(user);
   }
   render() {
     return (

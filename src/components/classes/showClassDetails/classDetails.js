@@ -42,8 +42,6 @@ export class classDetails extends Component {
 
 
     render() {
-
-
         return ( 
             <center >
             <Card style = {{ width: '18rem' } } >
@@ -69,10 +67,6 @@ export class classDetails extends Component {
              </Card>
 
             </center>
-
-
-
-
 
         )
 
