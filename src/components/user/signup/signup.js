@@ -2,6 +2,7 @@ import React from 'react';
 import User from '../../../models/user';
 import UserForm from '../userForm/userForm';
 import {
+  Link,
   withRouter
 } from 'react-router-dom'
 
@@ -38,7 +39,9 @@ class SignUp extends React.Component {
     return (
 
       <div id="sign-up">
-        <UserForm onSubmit={user => this.onClickSignUp(user)} onCancel={_ => this.props.history.push('/')}  titleText="Create an account" buttonText="Sign up!" />
+        <UserForm onSubmit={user => this.onClickSignUp(user)} onCancel={_ => this.props.history.push('/')} titleText="Create an account" buttonText="Sign up!" footer={<div>Already have an account? <Link to='/login'>Log in</Link></div>} />
+
+        
       </div>
     )
   }

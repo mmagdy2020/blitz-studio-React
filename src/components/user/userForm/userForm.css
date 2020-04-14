@@ -13,3 +13,7 @@
 #userForm form {
   text-align: left;
 }
+
+#userForm button{
+  width:100%;
+}
