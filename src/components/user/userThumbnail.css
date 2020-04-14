@@ -1,0 +1,10 @@
+.user-thumbnail img{
+  height:40px;
+  width:40px;
+  border-radius: 20px;
+  margin:5px;
+}
+.user-thumbnail{
+  display:inline-block;
+  margin:5px;
+}

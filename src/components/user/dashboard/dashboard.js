@@ -9,11 +9,12 @@ import FetchClasses from '../../classes/showClasses/fetchClass';
 // Mike: 
 import Checkin from '../../attendanceRecord/checkin/checkin';
 import AttendanceList from '../../attendanceRecord/attendance/attendanceList';
+import { withRouter } from 'react-router';
 // import Attendance from '../../attendanceRecord/attendance/attendance';
 
 
 // has props: user, onUserChange(user), 
-export default class Dashboard extends React.Component {
+class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = { users: [], mode: "view", selectedUser: null };
@@ -31,7 +32,8 @@ export default class Dashboard extends React.Component {
       // console.log("delete by id response:", response);
       if (success) {
         if (user._id === this.props.user._id) {
-          this.props.onUserChange(user);
+          this.props.onUserChange(null);
+          this.props.history.push('/login');
         } else {
           let users = await User.GetAllUsers();
           this.setState({ users: users });
@@ -72,8 +74,8 @@ export default class Dashboard extends React.Component {
   /**
   * Admin Panel event handlers and data fetchers
   */
-  onClickStudentCheckIn(event){
-    if (this.state.users.length===0){
+  onClickStudentCheckIn(event) {
+    if (this.state.users.length === 0) {
       this.getUsersData();
     }
   }
@@ -87,7 +89,7 @@ export default class Dashboard extends React.Component {
       //  TODO: Add call to get classes
     }
   }
-  async getUsersData(){
+  async getUsersData() {
     if (this.props.user.role === "admin" && this.state.users.length === 0) {
       let users = await User.GetAllUsers();
       this.setState({ users: users });
@@ -96,6 +98,7 @@ export default class Dashboard extends React.Component {
 
 
   render() {
+    console.log("dashboard props.user", this.props.user)
     let dash;
     if (!this.props.user) {
       dash = <div>Dashboard unavailable for guests. Please log in to see your dashboard.</div>;
@@ -125,9 +128,9 @@ export default class Dashboard extends React.Component {
         <div id="accordion">
           <div className="card">
             <div className="card-header" id="headingOne">
-              <h2 className="mb-0">
-                <button className="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" onClick={event=>{this.onClickStudentCheckIn(event)}}>Student Check-in</button>
-              </h2>
+              <button className="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" onClick={event => { this.onClickStudentCheckIn(event) }}>
+                <h5 className="mb-0">Student Check-in</h5>
+              </button>
             </div>
             <div id="collapseOne" className="collapse" aria-labelledby="headingOne" data-parent="#accordion">
               <div className="card-body">
@@ -137,11 +140,11 @@ export default class Dashboard extends React.Component {
           </div>
           <div className="card">
             <div className="card-header" id="headingTwo">
-              <h5 className="mb-0">
-                <button className="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" onClick={event => { this.onClickUserManager(event) }}>
+              <button className="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" onClick={event => { this.onClickUserManager(event) }}>
+                <h5 className="mb-0">
                   User Manager
-                </button>
-              </h5>
+                </h5>
+              </button>
             </div>
             <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
               <div className="card-body">
@@ -151,9 +154,11 @@ export default class Dashboard extends React.Component {
           </div>
           <div className="card">
             <div className="card-header" id="headingThree">
-              <h5 className="mb-0">
-                <button className="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">Class Manager</button>
+              <button className="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                <h5 className="mb-0">
+                  Class Manager
               </h5>
+              </button>
             </div>
             <div id="collapseThree" className="collapse" aria-labelledby="headingThree" data-parent="#accordion">
               <div className="card-body">
@@ -171,3 +176,5 @@ export default class Dashboard extends React.Component {
 
   }
 }
+
+export default withRouter(Dashboard)

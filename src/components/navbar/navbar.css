@@ -7,5 +7,10 @@
 }
 
 #navbar .adjustable {
-  margin-right: 85px;
+  /* margin-right: 85px; */
+}
+
+#navbar .userCorner {
+  text-align:right;
+  width:100%;
 }

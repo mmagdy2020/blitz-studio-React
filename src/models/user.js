@@ -27,11 +27,11 @@ export default class User {
   static async LogInUser(email, password) {
     let foundUser = null;
 
-    const response = await axios.post('/user/authenticate', { email: email, password: password });
+    const response = await axios.post('/users/authenticate', { email: email, password: password });
     console.log("authenticate response:", response);
     let data = response.data;
     if (data) {
-      foundUser = new User(data._id, data.firstname, data.lastname, data.email, data.phone, data.isMiuStudent, data.role, data.password, data.imgUrl);
+      foundUser = new User(data._id, data.firstname, data.lastname, data.email, data.phone, data.isMiuStudent, data.role, data.password, data.imgUrl, data.balance);
       console.log("foundUser:", foundUser);
     }
     return foundUser;
@@ -47,14 +47,14 @@ export default class User {
    */
   static async AddNewUser(user) {
 
-    const existsResponse = await axios.post('/user/exists', { email: user.email });
+    const existsResponse = await axios.post('/users/exists', { email: user.email });
     console.log("existsResponse", existsResponse);
 
     if (existsResponse.data.userExists) { return null }
 
     // add new user to all users
     user.role = "user";
-    const createResponse = await axios.post('/user', user);
+    const createResponse = await axios.post('/users', user);
     console.log("createUserResponse:", createResponse);
     return createResponse.data;
   }
@@ -81,7 +81,7 @@ export default class User {
    * @memberof User
    */
   static async DeleteUserById(id) {
-    const response = await axios.delete('/user/' + id);
+    const response = await axios.delete('/users/' + id);
     console.log("response to DeleteUserById:", response);
     return response.status === 201;
   }
@@ -90,13 +90,27 @@ export default class User {
    * Update user information
    *
    * @static
-   * @param {User} user
+   * @param {User} user object with properties _id and whatever other properties are to be udpated.
    * @returns {User} updated User object
    * @memberof User
    */
   static async UpdateUser(user) {
-    const response = await axios.patch('/user', user);
+    const response = await axios.patch('/users/' + user._id, user);
     console.log("updateUserResponse", response);
     return response.data;
   }
+  /**
+   * Get user from database given user id
+   *
+   * @static
+   * @param {String} id
+   * @returns {Boolean} success
+   * @memberof User
+   */
+  static async FindUserById(id) {
+    const response = await axios.get('/users/' + id);
+    console.log("response to FindUserById:", response);
+    return response.data;
+  }
 }
+
