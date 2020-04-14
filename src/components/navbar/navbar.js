@@ -16,23 +16,30 @@ export default class Navbar extends React.Component {
       <li>
         <Link className="nav-link text-primary" to="/dashboard">Dashboard</Link>
       </li>
-        : "";
+      : "";
 
     const userCorner = this.props.user ?
-      <div className="userCorner">
-        <UserThumb user={this.props.user}></UserThumb>
-
-        <Link to="/login"><button id="log-out-btn" className="btn btn-outline-primary mr-1" type="button" onClick={() => this.onClickLogOut()}>Log Out</button></Link>
-      </div>
-      : <div className="userCorner">
-        <Link id="log-in-btn" className="btn btn-outline-primary my-2 mr-1 my-sm-0" type="button" to="/login" >Log In</Link>
-        <Link id="sign-up-btn" className="btn btn-primary my-2 my-sm-0  mr-1" type="button" to="/signup">Sign up</Link>
-      </div>
+      <ul className="userCorner navbar-nav navbar-right">
+        <li className="nav-item">
+          <Link className="text-primary" to="/dashboard"><UserThumb className="btn btn-outline-primary" user={this.props.user}></UserThumb></Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/login"><button id="log-out-btn" className="btn btn-outline-primary nav-item" type="button" onClick={() => this.onClickLogOut()}>Log Out</button></Link>
+        </li>
+      </ul>
+      : <ul className="userCorner nav navbar-nav navbar-right">
+        <li className="nav-item">
+          <Link id="log-in-btn" className="btn btn-outline-primary my-2 mr-1 my-sm-0 nav-item  " type="button" to="/login" >Log In</Link>
+        </li>
+        <li className="nav-item">
+          <Link id="sign-up-btn" className="btn btn-primary my-2 my-sm-0  mr-1  " type="button" to="/signup">Sign up</Link>
+        </li>
+      </ul>
     return (
       <nav id="navbar" className="navbar navbar-expand-md navbar-light bg-light text-center">
-        <Link to="/" className="navbar-brand"><span style={{ visibility: "hidden" }}>Blitz Studio</span></Link>
 
         <div className="adjustable d-flex">
+          <Link to="/" className="navbar-brand"><span style={{ visibility: "hidden" }}>Blitz Studio</span></Link>
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto">
@@ -72,7 +79,6 @@ export default class Navbar extends React.Component {
             <span className="navbar-toggler-icon"></span>
           </button>
           {userCorner}
-          
         </div>
       </nav>
     )

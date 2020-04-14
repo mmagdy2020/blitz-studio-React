@@ -57,15 +57,23 @@ class Dashboard extends React.Component {
     // console.log("onSaveChagnesToEditUser, after server update call:", updatedUser);
     // console.log("this.props.user.id", this.props.user._id);
     // console.log("formUser", formUser);
-    if (updatedUser) {
-      if (this.props.user._id === formUser._id) {
-        // console.log("Edited active user.")
-        this.props.onUserChange(updatedUser);
-        this.setState({ mode: "view" });
+
+    
+    if (updatedUser) { // successful update
+      if (this.props.user._id === formUser._id) { 
+        console.log("Edited active user.")
+        this.props.onUserChange(updatedUser); 
+        this.setState({ mode: "view", selectedUser: null, user: updatedUser });
+
+        if(this.props.user.role === User.ROLES.ADMIN){
+          let users = await User.GetAllUsers();
+          this.setState({ users });
+        }
+        
       } else {
-        // console.log("admin changed another user");
+        console.log("admin changed another user");
         let users = await User.GetAllUsers();
-        this.setState({ users: users, mode: "view" });
+        this.setState({ users: users, mode: "view", selectedUser: null });
       }
     } else {
       alert("Changes weren't saved.");
@@ -90,7 +98,7 @@ class Dashboard extends React.Component {
     }
   }
   async getUsersData() {
-    if (this.props.user.role === "admin" && this.state.users.length === 0) {
+    if (this.props.user.role === User.ROLES.ADMIN && this.state.users.length === 0) {
       let users = await User.GetAllUsers();
       this.setState({ users: users });
     }
@@ -104,7 +112,7 @@ class Dashboard extends React.Component {
       dash = <div>Dashboard unavailable for guests. Please log in to see your dashboard.</div>;
 
     }
-    else if (this.props.user.role === "user") {
+    else if (this.props.user.role === User.ROLES.USER) {
       // If the active user is of role 'user', show dance student dashboard
 
       dash = (<div className="container">
@@ -118,7 +126,7 @@ class Dashboard extends React.Component {
         <Checkin user={this.props.user} />
       </div>)
 
-    } else if (this.props.user.role === "admin") {
+    } else if (this.props.user.role === User.ROLES.ADMIN) {
       // If the active user is of role 'user', show admin dashboard
 
 
