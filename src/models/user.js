@@ -1,5 +1,6 @@
 import axios from 'axios';
 export default class User {
+  static ROLES = {ADMIN: "admin", USER: "user"}
   constructor(id, first, last, email, phone, isMiuStudent, role, password, imgUrl, balance) {
     this._id = id;
     this.firstname = first;
@@ -9,7 +10,7 @@ export default class User {
     this.email = email;
     this.phone = phone;
     this.isMiuStudent = isMiuStudent;
-    this.role = role || "user";
+    this.role = role || User.ROLES.USER;
     this.password = password;
     this.balance = balance || 0;
     this.attendances = [];
@@ -53,7 +54,7 @@ export default class User {
     if (existsResponse.data.userExists) { return null }
 
     // add new user to all users
-    user.role = "user";
+    user.role = User.ROLES.USER;
     const createResponse = await axios.post('/users', user);
     console.log("createUserResponse:", createResponse);
     return createResponse.data;

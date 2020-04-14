@@ -8,9 +8,12 @@
 
 #navbar .adjustable {
   /* margin-right: 85px; */
+  width: 100%;
 }
 
-#navbar .userCorner {
-  text-align:right;
-  width:100%;
-}
+/* #navbar .adjustable { border: 1px solid blue; }
+#navbar .userCorner li { border: 1px solid green; }
+#navbar { border: 1px solid red;}
+#navbar .userCorner { border: 1px solid orange;}
+#navbarSupportedContent {border: 1px solid magenta}
+.adjustable button{ border:1px solid magenta} */
