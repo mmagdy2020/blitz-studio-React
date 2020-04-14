@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './checkin.scss';
-import { getClasses, getUserAttendance, createAttendance } from '../helper';
+import { getClasses, getUserAttendance, createAttendance, updateUserBalance } from '../helper';
+import User from '../../../models/user';
 
 // Mike:
 import ComingSoon from '../sharedComponents/comingSoon';
@@ -44,10 +45,13 @@ class Checkin extends Component {
 
   onCheckinBtnClick = async () => {
     // creating attendance record for each classes
-    let userId = this.props.user._id;
-    await createAttendance(this.state.checkedInClasses, userId);
+    let user = this.props.user;
 
-    // let attendances = await getUserAttendance(userId);
+    await createAttendance(this.state.checkedInClasses, user);
+
+    // update user balance
+    let amount = this.state.checkedInClasses.length * 10;
+    await updateUserBalance(user, amount);
 
     this.setState((state, props) => ({
       isCheckedIn: true
@@ -69,26 +73,29 @@ class Checkin extends Component {
     }));
   }
 
-  componentDidUpdate() {
-    console.log('state: ', this.state);
+  async componentDidUpdate() {
+    // get updated user/ user list
+    // let users = await User.GetAllUsers();
+    
+    // console.log('inside componentDidUpdate update user list: ', users);
   }
 
   render() {
     let user = this.props.user;
-    let classesForTheDay = this.state.classesForTheDay;
+    let classesForTheDay = this.state.danceClasses;
     let classesForTheDayView;
     let checkinBtn;
     let afterLoginView;
 
     user.checkedInClasses = this.state.checkedInClasses;
     user.attendances = this.state.attendances;
-    user.balance = 100;
+    
 
 
     if (user.role === 'admin') {
       afterLoginView = <UserListWithAttendance user={user}  />
     } else if (this.state.isCheckedIn) {
-      afterLoginView = <CheckinSuccessView user={user} />
+      afterLoginView = <CheckinSuccessView user={user} danceClasses={this.state.danceClasses} />
     } else if (this.state.viewDetails) {
       classesForTheDayView = <ComingSoon />
     } else {

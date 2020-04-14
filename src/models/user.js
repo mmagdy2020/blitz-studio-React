@@ -31,7 +31,7 @@ export default class User {
     console.log("authenticate response:", response);
     let data = response.data;
     if (data) {
-      foundUser = new User(data._id, data.firstname, data.lastname, data.email, data.phone, data.isMiuStudent, data.role, data.password, data.imgUrl);
+      foundUser = new User(data._id, data.firstname, data.lastname, data.email, data.phone, data.isMiuStudent, data.role, data.password, data.imgUrl, data.balance);
       console.log("foundUser:", foundUser);
     }
     return foundUser;

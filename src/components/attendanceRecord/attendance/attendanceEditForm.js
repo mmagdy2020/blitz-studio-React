@@ -2,10 +2,9 @@ import React from 'react';
 
 const AttendanceEditForm = (props) => {
     let user = props.user;
-    // let danceClasses = ['SALSA', 'BACHATA', 'CONNECTION DANCE WORKSHOP'];
     console.log(props)
     let danceClasses = props.danceClasses;
-    let options = danceClasses.map(c => <option value={c._id}>{c.title}</option>);
+    let options = danceClasses.map(c => <option key={c._id} value={c._id}>{c.title}</option>);
 
     return (
         <form className="atendance-edit-form">

@@ -2,34 +2,41 @@ import axios from 'axios';
 import AttendanceModel from '../../models/attendance';
 
 
-export const createAttendance = async (checkedInClasses, userId) => {
+export const createAttendance = async (checkedInClasses, user) => {
+    console.log('inside createAttendance...', user)
+    let userId = user._id;
     let response = await Promise.all(checkedInClasses.map(async (c) => {
         let newAttendance = new AttendanceModel(userId, c.classId);
 
         return await
-            axios.post(axios.defaults.baseURL + '/attendances', newAttendance)
+            axios.post(axios.defaults.baseURL + '/attendances', newAttendance);
+
     }));
 
     console.log('response data from helper: ', response.data)
     return response.data;
 }
 
-export const createSingleAttendance = async (classId, userId) => {
+export const createSingleAttendance = async (classId, user) => {
+    let userId = user._id;
     let newAttendance = new AttendanceModel(userId, classId);
     let response = await axios.post(axios.defaults.baseURL + '/attendances', newAttendance)
 
-    console.log('response data from helper: ', response.data)
+    console.log('response data from helper after createing atendance: ', response.data);
+
+
     return response.data;
 }
 
-export const updateUserBalance = async (user, amount) => {
+export const updateUserBalance = async (user, amount = 10) => {
     let newBalance = user.balance - amount;
+    console.log('inside updateUserBalance : ', user);
 
-    let payload = { balance: newBalance };
-    let uri = axios.defaults.baseURL + '/users/' + user._id;
+    let payload = { balance: newBalance, _id: user._id };
+    let uri = axios.defaults.baseURL + '/user';
     let response = await axios.patch(uri, payload);
 
-    console.log('response data from helper: ', response.data)
+    console.log('response data from helper after updating balance : ', response.data)
     return response.data;
 }
 

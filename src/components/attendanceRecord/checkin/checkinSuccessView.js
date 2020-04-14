@@ -11,14 +11,12 @@ const classColorCode = {
     connection: '#17a2b8'
 };
 
-const danceClasses = {
-    "5e910fbd512ace828c4defd0": "SALSA"
-}
-
 const CheckinSuccessView = (props) => {
-    let user = props.user;
+    console.log('CheckinSuccessView props:...', props);
+    const user = props.user;
     let checkedinClassesView;
 
+    // grouping attendances for the same class
     if (user.attendances.length > 0) {
         user.attendances = groupDuplicates(user.attendances);
 
@@ -32,21 +30,30 @@ const CheckinSuccessView = (props) => {
     }
 
     if (user.attendances.length > 0) {
-        checkedinClassesView = user.attendances.map(attendance => (<div key={attendance.classId}>
-            <Line 
+        checkedinClassesView = user.attendances.map(attendance => {
+            let dc = props.danceClasses.find(c => c._id === attendance.classId);
+
+            return <div key={attendance.classId}>
+            <Line
                 percent={attendance.count}
                 strokeWidth={2}
-                strokeColor={classColorCode.salsa} />
-            <p>{danceClasses[attendance.classId]}</p>
-        </div>));
+                strokeColor={classColorCode.bachata} />
+            <p>{dc? dc.title: ''}</p>
+            </div>
+        });
     }
 
     return (
         <div className="checkedin-success">
-            <CircleImgWithName title={props.title} user={props.user} />
-
+            {/* <CircleImgWithName title={props.title} user={props.user} /> */}
+            <div style={{ backgroundColor: 'azure', padding: '20px' }}>
+                <h4>Balance:  </h4>
+                <strong style={user.balance  > 0 ? { color: 'green' } : { color: 'red' }}> $  {user.balance.toFixed(2)}</strong>
+            </div>
+            
             <div className="checkedin-class">
                 {checkedinClassesView}
+              
             </div>
 
         </div>

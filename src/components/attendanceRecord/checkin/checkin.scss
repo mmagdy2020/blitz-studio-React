@@ -61,6 +61,10 @@ $borderRadius: 0px;
 .checkedin-success {
     display: grid;
     grid-template-columns: 1fr 3fr;
+    column-gap: 10px;
+    border: 1px solid #dfdfdf;
+    padding: 10px;
+    margin: 5px;
 }
 .mycheckedin-classes{
     display: grid;
