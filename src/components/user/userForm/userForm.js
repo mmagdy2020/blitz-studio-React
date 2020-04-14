@@ -21,7 +21,8 @@ class UserForm extends React.Component {
         imgUrl: "",
         password: "",
         confirmPassword: "",
-        role: "user"
+        role: "user",
+        balance: 0
       }
     }
 
@@ -33,7 +34,7 @@ class UserForm extends React.Component {
       alert("Passwords do not match");
     } else { // call callback with user.
       let id = this.props.userToEdit ? this.props.userToEdit._id : "";
-      const user = new User(id, this.state.firstname, this.state.lastname, this.state.email, this.state.phone, this.state.isMiuStudent, this.state.role, this.state.password, this.state.imgUrl);
+      const user = new User(id, this.state.firstname, this.state.lastname, this.state.email, this.state.phone, this.state.isMiuStudent, this.state.role, this.state.password, this.state.imgUrl, this.state.balance);
       this.props.onSubmit(user);
     }
   }
@@ -119,9 +120,10 @@ class UserForm extends React.Component {
             </div>
             {adminSection}
             <div className="form-group">
-              <button type="button" className="btn btn-outline-warning m-2" onClick={(event) => { this.onClickCancel(event) }}>Cancel</button>
-              <button type="button" className="btn btn-outline-primary m-2" onClick={(event) => { this.onClickSubmit(event) }}>{this.props.buttonText}</button>
+              <button type="button" className="btn btn-outline-primary my-2" onClick={(event) => { this.onClickSubmit(event) }}>{this.props.buttonText}</button>
+              <button type="button" className="btn btn-outline-warning" onClick={(event) => { this.onClickCancel(event) }}>Cancel</button>
             </div>
+            {this.props.footer}
           </form>
         </div>
       </div>

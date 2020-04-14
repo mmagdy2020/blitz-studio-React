@@ -2,6 +2,7 @@ import React from 'react';
 import User from '../../../models/user';
 import './login.css';
 import {
+  Link,
   withRouter
 } from 'react-router-dom'
 
@@ -27,14 +28,14 @@ class LogIn extends React.Component {
 
     if (!user) {
       // on failure
-      console.log("error:",user);
+      console.log("error:", user);
 
       // show error
       alert("Username and password combination is invalid. Try again.");
 
     } else {
       // on successful log in
-      this.props.history.push({pathname: '/dashboard'});
+      this.props.history.push({ pathname: '/dashboard' });
       // emit 'event' that user logged in
       this.props.onUserLoggedIn(user);
     }
@@ -56,7 +57,11 @@ class LogIn extends React.Component {
               <input id="password" name="password" className="form-control" type="password" placeholder="Password" value={this.state.password} onChange={this.handleInputChange}></input>
 
             </div>
-             <button type="button" className="btn btn-primary" onClick={event => this.onClickLogIn(event)}>Log In</button> 
+            <div className="form-group">
+              <button type="button" className="btn btn-primary" onClick={event => this.onClickLogIn(event)}>Log In</button>
+            </div>
+            New user? <Link to='/signup'>Sign up</Link>
+
           </form>
         </div>
       </div>

@@ -13,3 +13,6 @@
 #log-in form {
   text-align: left;
 }
+#log-in button {
+  width:100%;
+}

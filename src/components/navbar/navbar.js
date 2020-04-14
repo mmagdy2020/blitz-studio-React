@@ -12,23 +12,28 @@ export default class Navbar extends React.Component {
     this.props.onLogOut();
   }
   render() {
+    const dashboardLink = this.props.user ?
+      <li>
+        <Link className="nav-link text-primary" to="/dashboard">Dashboard</Link>
+      </li>
+        : "";
+
     const userCorner = this.props.user ?
-      <div>
+      <div className="userCorner">
         <UserThumb user={this.props.user}></UserThumb>
-        <Link to="/login"><button id="log-out-btn" className="btn btn-outline-primary" type="button" onClick={() => this.onClickLogOut()}>Log Out</button></Link>
+
+        <Link to="/login"><button id="log-out-btn" className="btn btn-outline-primary mr-1" type="button" onClick={() => this.onClickLogOut()}>Log Out</button></Link>
       </div>
-      : <div>
-        <Link id="log-in-btn" className="btn btn-outline-primary my-2 mx-1 my-sm-0" type="button" to="/login" >Log In</Link>
-        <Link id="sign-up-btn" className="btn btn-primary my-2 my-sm-0" type="button" to="/signup">Sign up</Link>
+      : <div className="userCorner">
+        <Link id="log-in-btn" className="btn btn-outline-primary my-2 mr-1 my-sm-0" type="button" to="/login" >Log In</Link>
+        <Link id="sign-up-btn" className="btn btn-primary my-2 my-sm-0  mr-1" type="button" to="/signup">Sign up</Link>
       </div>
     return (
       <nav id="navbar" className="navbar navbar-expand-md navbar-light bg-light text-center">
         <Link to="/" className="navbar-brand"><span style={{ visibility: "hidden" }}>Blitz Studio</span></Link>
 
         <div className="adjustable d-flex">
-          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-          </button>
+
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto">
               <li className="nav-item">
@@ -57,13 +62,18 @@ export default class Navbar extends React.Component {
               <li className="nav-item">
                 <Link className="nav-link" to="/reviews">Reviews</Link>
               </li>
-              <li className="nav-item"><Link className="nav-link" to="/contact">Contact</Link>
+              <li className="nav-item">
+                <Link className="nav-link" to="/contact">Contact</Link>
               </li>
+              {dashboardLink}
             </ul>
           </div>
-
+          <button className="navbar-toggler mr-1" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          {userCorner}
+          
         </div>
-        {userCorner}
       </nav>
     )
   }
