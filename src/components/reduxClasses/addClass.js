@@ -26,7 +26,7 @@ class AddClassRedux extends Component {
     console.log(this.props)
     this.props.onCreateClass(this.state)
         setTimeout(() => {
-      this.props.history.push('/classes')}, 500); // To aviod loading the page without refreshing it...
+      this.props.history.push('/dashboard')}, 500); // To aviod loading the page without refreshing it...
   
 }
 

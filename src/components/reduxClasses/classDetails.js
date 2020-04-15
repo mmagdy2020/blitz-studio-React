@@ -24,7 +24,7 @@ export class classDetailsRedux extends Component {
     const id = this.props.match.params.id
     this.props.onDeleteClass(id)
     setTimeout(() => {
-      this.props.history.push('/classes')
+      this.props.history.push('/dashboard')
     }, 500);
   }
 

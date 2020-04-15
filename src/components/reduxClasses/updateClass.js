@@ -11,7 +11,7 @@ class UpdateClass extends Component {
     //Dispatch updateClass 
     this.props.onUpdateClass(this.state._id, this.state)
     setTimeout(() => {
-      this.props.history.push('/classes')}, 500); // To aviod loading the page without refreshing it...
+      this.props.history.push('/dashboard')}, 500); // To aviod loading the page without refreshing it...
   }
 
 

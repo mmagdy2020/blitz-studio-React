@@ -138,9 +138,9 @@ class CreateSerie extends Component {
                     <input type="timeWeekly" className="form-control" id="timeWeekly" placeholder=" time.." value={this.state.timeWeekly || ''} onChange={(event) => this.handleInputChange(event)} />
                   </div>
                   <center>
-                    <button onClick={() => { this.onCreateAnother() }} className="btn btn-outline-primary">Save, create another</button>
+                    <button onClick={() => { this.onCreateAnother() }} className="btn btn-outline-primary">Save, Create another</button>
                     <br />
-                    <button onClick={() => { this.onSubmit() }} className="btn btn-outline-success">Save, exsit</button>
+                    <button onClick={() => { this.onSubmit() }} className="btn btn-outline-success">Save, Exit</button>
                   </center>
                   <br />
                 </div>

@@ -30,8 +30,14 @@ class showReuxClass extends Component {
 console.log(this.props.isAuth)
 
     return (
+      <div>
+
+{this.props.isAuth === 'admin' ? <Link to ="/add-class"  ><Button variant="primary" style={{ marginTop: '1rem' }} size="lg">Create new Class!</Button></Link>:<div/>
+}
+
 
       <Container id="Container">
+
         <Row>
 
           {this.props.classes ? this.props.classes.map(danceClass => {
@@ -72,6 +78,8 @@ console.log(this.props.isAuth)
 
         </Row>
       </Container>
+
+      </div>
 
 
     )

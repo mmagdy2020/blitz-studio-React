@@ -69,8 +69,6 @@ export const fetchClasses = () => {
     return dispatch => {
         axois.get('/classes').then(result => {
             console.log({'fetchedClassRespone' : result.data })
-
-            console.log(result)
             dispatch(intiClass(result.data))
             
         }).catch(err => console.log(err))
