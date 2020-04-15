@@ -1,88 +1,119 @@
 import React, { Component } from 'react';
 import './checkin.scss';
-import axios from 'axios';
+import { getClasses, getUserAttendance, createAttendance, updateUserBalance } from '../helper';
+import User from '../../../models/user';
 
 // Mike:
 import ComingSoon from '../sharedComponents/comingSoon';
-import CircleProgress from '../sharedComponents/circleProgress';
-import User from '../../../models/user';
-import Attendance from '../attendance/attendance';
+import CheckinSuccessView from './checkinSuccessView';
+import UserListWithAttendance from '../attendance/userListWithAttendance';
 
 class Checkin extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      danceClasses: [],
+      classesForTheDay: [],
       viewDetails: false,
-      isCheckedIn: false
+      isCheckedIn: false,
+      checkedInClasses: [],
+      attendances: [],
+      user: this.props.user
     };
 
   }
-  images =
-    {
-      salsa: "https://i.ya-webdesign.com/images/couple-dancing-salsa-png-7.png",
-      bachata: "https://scontent-ort2-1.xx.fbcdn.net/v/t1.0-9/78117221_2563932770327540_7118699424565428224_o.jpg?_nc_cat=101&_nc_sid=8024bb&_nc_ohc=uQBZXGH_MaYAX-AU3Dz&_nc_ht=scontent-ort2-1.xx&oh=80486fe46b9dc2cedb275eeae25a9837&oe=5EAFAA3F",
-      connection: "https://scontent-ort2-1.xx.fbcdn.net/v/t1.0-9/75080120_2563932803660870_1666130574189789184_o.jpg?_nc_cat=105&_nc_sid=8024bb&_nc_ohc=AmguxEjJSAYAX_MmCFb&_nc_ht=scontent-ort2-1.xx&oh=08393a362f34367b18d72efb3243609e&oe=5EB16557"
-    };
 
-  async componentDidMount() {
-    let response = await axios.get(axios.defaults.baseURL + '/classes');
+  onDanceClassClick = async (event, classId) => {
+    const checkedInClassesCoppy = [...this.state.checkedInClasses];
+    let foundIndex = checkedInClassesCoppy.findIndex(c => c.classId === classId);
+    console.log('foundIndex...', foundIndex);
+    if (foundIndex === -1) {
+      checkedInClassesCoppy.push({ classId: classId, checkedIn: true })
+    } else {
+      checkedInClassesCoppy.splice(foundIndex, 1);
+    }
 
-    let danceClassesCopy = [...this.state.danceClasses];
-    danceClassesCopy = response.data;
-    this.setState({ danceClasses: danceClassesCopy });
+    this.setState({
+      checkedInClasses: checkedInClassesCoppy
+    }
+    );
   }
 
-  onLearnMoreBtnClick() {
+  onLearnMoreBtnClick = () => {
     let stateCoppy = { ...this.state };
     stateCoppy.viewDetails = !this.state.viewDetails;
     this.setState(stateCoppy);
   }
-  onCheckinBtnClick() {
-    let stateCoppy = { ...this.state };
-    stateCoppy.isCheckedIn = !this.state.isCheckedIn;
-    this.setState(stateCoppy);
+
+  onCheckinBtnClick = async () => {
+    // creating attendance record for each classes
+    let user = this.props.user;
+    if (this.state.checkedInClasses.length > 0) {
+
+
+
+      await createAttendance(this.state.checkedInClasses, user);
+
+      // update user balance
+      let amount = this.state.checkedInClasses.length * 10;
+      let response = await updateUserBalance(user, amount);
+      this.props.onUserChange(response);
+
+      this.setState((state, props) => ({
+        isCheckedIn: true
+      }));
+    } else {
+      alert('Please select atleas one class before checkin!');
+    }
+  }
+
+
+
+  async componentDidMount() {
+    let classes = await getClasses();
+    console.log('classes : ', classes);
+
+    let attendances = await getUserAttendance(this.props.user._id);
+    console.log('user attendances: ', attendances);
+
+    this.setState((state, props) => ({
+      danceClasses: classes,
+      attendances: attendances
+    }));
+  }
+
+  async componentDidUpdate() {
+    // get updated user/ user list
+    // let users = await User.GetAllUsers();
+
+    // console.log('inside componentDidUpdate update user list: ', users);
   }
 
   render() {
-    let classesForTheDay;
-    let checkinBtn;
-    let checkedInView;
     let user = this.props.user;
-    user.attendance = 60;
+    let classesForTheDay = this.state.danceClasses;
+    let classesForTheDayView;
+    let checkinBtn;
+    let afterLoginView;
 
-    console.log('user:.............', user);
-    // TODO: to be removed when dance classes have their own imgUrl
-    let classes = this.state.danceClasses.map((c, index) => {
-      if (/bachata/i.test(c.title)) {
-        c.imgUrl = this.images.bachata;
-      } else if (/salsa/i.test(c.title)) {
-        c.imgUrl = this.images.salsa;
-      } else {
-        c.imgUrl = this.images.connection;
-      }
-      return c;
-    });
+    user.checkedInClasses = this.state.checkedInClasses;
+    user.attendances = this.state.attendances;
+
+
 
     if (user.role === 'admin') {
-      checkedInView = <Attendance
-        title='Checked in view'
-        user={user} />
-      
+      afterLoginView = <UserListWithAttendance user={user} />
     } else if (this.state.isCheckedIn) {
-      checkedInView = <CircleProgress
-        title='Checked in view'
-        user={user}
-      />
-
+      afterLoginView = <CheckinSuccessView user={user} danceClasses={this.state.danceClasses} />
     } else if (this.state.viewDetails) {
-      classesForTheDay = <ComingSoon title='This is the class details view' />;
+      classesForTheDayView = <ComingSoon />
     } else {
-      if (classes) {
+      if (classesForTheDay) {
+        classesForTheDayView = <div className="classes">
+          {classesForTheDay.map(c => <div key={c._id} className="dance-class">
 
-        classesForTheDay = <div className="classes">
-          {classes.map(c => <div key={c._id} className="dance-class">
-            <div className="dance-class-info">
+            <div
+              className={this.state.checkedInClasses.find(cdc => cdc.classId === c._id) ? "dance-class-info checked-dance-class" : "dance-class-info"}
+              onClick={(event) => this.onDanceClassClick(event, c._id)}>
               <div>
                 <img src={c.imgUrl} alt="salsa dance" />
               </div>
@@ -105,20 +136,20 @@ class Checkin extends Component {
         checkinBtn = <button
           className="btn-checkin"
           onClick={() => this.onCheckinBtnClick()}
-        >CHEKIN</button>;
+        >CHECK IN</button>;
 
       } else {
-        classesForTheDay = <h1>No Class for today</h1>;
+        classesForTheDayView = <h1>No Class for today</h1>;
       }
     }
 
     return (
       <div className="container">
-        {classesForTheDay}
+        {classesForTheDayView}
 
         {checkinBtn}
 
-        {checkedInView}
+        {afterLoginView}
       </div>
     );
   }

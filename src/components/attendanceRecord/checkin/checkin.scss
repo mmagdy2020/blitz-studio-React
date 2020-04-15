@@ -2,6 +2,7 @@ $blueColor: #3498db;
 $greenColor: #4caf50;
 $btnBorderRadius: 0px;
 $borderRadius: 0px;
+
 * {
     box-sizing: border-box;
 }
@@ -23,8 +24,6 @@ $borderRadius: 0px;
 .dance-class-info:hover {
     transform: scale(.99);
     cursor: pointer;
-    background-color: $greenColor;
-    color: white;
     font-weight: bold;
 }
 
@@ -49,13 +48,32 @@ $borderRadius: 0px;
     padding: 10px;
     width: 100% !important;
 }
+
 .btn-checkin:hover {
     background-color: $blueColor;
     color: white;
 }
 
-.btn{
+.btn {
     border-radius: $btnBorderRadius;
+}
+
+.checkedin-success {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    column-gap: 10px;
+    border: 1px solid #dfdfdf;
+    padding: 10px;
+    margin: 5px;
+}
+.mycheckedin-classes{
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+}
+
+.checked-dance-class {
+    background-color: $greenColor;
+    color: white;
 }
 @media(max-width: 600px) {
 
