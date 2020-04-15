@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux'
-import {fetchClasses}from '../store/classState/classAction'
+import {withRouter, Link} from 'react-router-dom'
+import { fetchClasses } from '../store/classState/classAction'
 import { Card, ListGroup, ListGroupItem, Button, Container, Row, Col } from "react-bootstrap";
+import './fetchclasses.css'
 // import DanceClass from './ClassDetails'
 
-import {Link} from 'react-router-dom'
+
 
 class showReuxClass extends Component {
 
@@ -14,7 +16,7 @@ class showReuxClass extends Component {
   }
 
   showClassDetailsHandeller = (id) => {
-    console.log(id)
+    console.log('------------------')
     this.props.history.push(`/classes/${id}`);
   }
 
@@ -25,11 +27,11 @@ class showReuxClass extends Component {
 
   render() {
 
-    
+console.log(this.props.isAuth)
 
     return (
 
-      <Container>
+      <Container id="Container">
         <Row>
 
           {this.props.classes ? this.props.classes.map(danceClass => {
@@ -38,9 +40,10 @@ class showReuxClass extends Component {
 
               <center key={danceClass._id} >
                 <Col xs>
-                  <Card border="primary" style={{ width: "15rem" }} >
-                    <Card.Img variant="top" src={danceClass.imgUrl} />
+                  <Card border="secondary" id="cardID" >
                     <Card.Header>{danceClass.title}</Card.Header>
+
+                    <Card.Img variant="top" src={danceClass.imgUrl} id="img" className="zoom" />
                     <Card.Body>
                       {/* <Card.Title>{danceClass.date}</Card.Title> */}
                       {/* <Card.Text>{danceClass.description}</Card.Text> */}
@@ -49,12 +52,15 @@ class showReuxClass extends Component {
                         <ListGroupItem>{danceClass.date}</ListGroupItem>
                         <ListGroupItem>{danceClass.time}</ListGroupItem>
                       </ListGroup>
-                      
-                      <Button variant="info" onClick={() => { this.showClassDetailsHandeller(danceClass._id) }} >Details</Button>
-                      <br/>
-                      {danceClass.isSeries ? <Link to={`/create-serie/${danceClass._id}`} ><Button variant="primary">createSeries!</Button>{' '}</Link> :<div/>}
-                   
-                   </Card.Body>
+
+                      <div>
+                      <Link to={{pathname:`/classes/${danceClass._id}`,isAuth:this.props.isAuth}} ><Button onClick={() => { this.showClassDetailsHandeller(danceClass._id) }}variant="info" style={{ marginTop: '1rem' }} size="sm">details!</Button></Link> {' '}
+                        {/* <Button  style={{ marginTop: '1rem' }} variant="info" onClick={() => { this.showClassDetailsHandeller(danceClass._id) }} size="sm">Details</Button>{' '} */}
+                        {danceClass.isSeries && this.props.isAuth=== 'admin' ? <Link to={`/create-serie/${danceClass._id}`} ><Button variant="primary" style={{ marginTop: '1rem' }} size="sm">createSeries!</Button></Link> : <div />}
+                      </div>
+
+
+                    </Card.Body>
                   </Card>
                 </Col>
                 <br />
@@ -66,6 +72,8 @@ class showReuxClass extends Component {
 
         </Row>
       </Container>
+
+
     )
   }
 }
@@ -87,4 +95,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStatToProps, mapDispatchToProps)(showReuxClass)
+export default withRouter(connect(mapStatToProps, mapDispatchToProps)(showReuxClass))

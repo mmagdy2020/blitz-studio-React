@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route ,withRouter,} from 'react-router-dom';
 import About from '../pages/about';
 import './main.css';
 import Calendar from '../pages/calendar';
@@ -20,7 +20,7 @@ import updateClassRedux from '../reduxClasses/updateClass'
 import addClassReduc from  '../reduxClasses/addClass'
 import CreateClassSeries from '../reduxClasses/createClassSeries';
 
-export default class Main extends React.Component {
+ class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = { user: this.props.user };
@@ -105,6 +105,6 @@ export default class Main extends React.Component {
 }
 
 // export default Main
-// // export default withRouter(Main)
+export default withRouter(Main)
 
 

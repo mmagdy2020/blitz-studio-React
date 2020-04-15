@@ -17,7 +17,7 @@ class AddClassRedux extends Component {
     time: "",
     imgUrl: "",
     isSeries: false,
-    seriesClass: [{weekNumber: '',desc: '',timeWeekly: '',day:''}]
+    seriesClass: []
   };
 
 
