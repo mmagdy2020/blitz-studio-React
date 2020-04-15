@@ -4,7 +4,7 @@ import {fetchClasses}from '../store/classState/classAction'
 import { Card, ListGroup, ListGroupItem, Button, Container, Row, Col } from "react-bootstrap";
 // import DanceClass from './ClassDetails'
 
-// import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 class showReuxClass extends Component {
 
@@ -18,7 +18,14 @@ class showReuxClass extends Component {
     this.props.history.push(`/classes/${id}`);
   }
 
+
+  // createSeries=()=>{
+  //   this.props.history.push('/')
+  // }
+
   render() {
+
+    
 
     return (
 
@@ -36,17 +43,18 @@ class showReuxClass extends Component {
                     <Card.Header>{danceClass.title}</Card.Header>
                     <Card.Body>
                       {/* <Card.Title>{danceClass.date}</Card.Title> */}
-                      <Card.Text>{danceClass.description}</Card.Text>
+                      {/* <Card.Text>{danceClass.description}</Card.Text> */}
                       <ListGroup className="list-group-flush">
                         <ListGroupItem>{danceClass.instructor}</ListGroupItem>
                         <ListGroupItem>{danceClass.date}</ListGroupItem>
                         <ListGroupItem>{danceClass.time}</ListGroupItem>
                       </ListGroup>
-                      {/* <button onClick={() => this.showClassDetailsHandeller(danceClass._id)} > clickMe</button> */}
-                      <br />
-                      <Button variant="info" onClick={() => { this.showClassDetailsHandeller(danceClass._id) }} size="lg">Details</Button>
-                      {/* <Link to={{ pathname: `/edit-class/${danceClass._id}`, state: { class: danceClass } }} className='btn btn-info'>EditME..</Link> */}
-                    </Card.Body>
+                      
+                      <Button variant="info" onClick={() => { this.showClassDetailsHandeller(danceClass._id) }} >Details</Button>
+                      <br/>
+                      {danceClass.isSeries ? <Link to={`/createSerie/${danceClass._id}`} ><Button variant="primary">createSeries!</Button>{' '}</Link> :<div/>}
+                   
+                   </Card.Body>
                   </Card>
                 </Col>
                 <br />

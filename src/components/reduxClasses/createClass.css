@@ -1,0 +1,35 @@
+#createClass {
+  margin-top: 40px;
+}
+
+#createClass .container {
+  text-align: center;
+  max-width: 1000px;
+  border: 3px solid black;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+#createClass form {
+  text-align: left;
+}
+
+
+#createS{
+  margin-top: 20px;
+  border: 1px solid rgb(183, 193, 236);
+  padding: 20px;
+  border-radius: 30px;
+  max-width: 200px;
+
+
+
+}
+
+/* #createClass .container {
+  text-align: center;
+  max-width: 500px;
+  border: 3px solid black;
+  border-radius: 10px;
+  padding: 20px;
+} */

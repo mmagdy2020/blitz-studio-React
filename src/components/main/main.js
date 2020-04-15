@@ -18,6 +18,7 @@ import fetchClassRedux from '../reduxClasses/fetchClasses'
 import classDetailsRedux from '../reduxClasses/classDetails'
 import updateClassRedux from '../reduxClasses/updateClass'
 import addClassReduc from  '../reduxClasses/addClass'
+import CreateClassSeries from '../reduxClasses/createClassSeries';
 
 export default class Main extends React.Component {
   constructor(props) {
@@ -46,6 +47,8 @@ export default class Main extends React.Component {
           <Route exact path = "/classes/:id" component={classDetailsRedux}/>
           <Route exact path = "/edit-class/:id" component ={updateClassRedux}/>
           <Route exact path ="/add-class" component ={addClassReduc}/>
+          <Route exact path ="/createSerie/:id" component ={CreateClassSeries}/>
+
 
           {/* <Route exact path = "/classes" component={ShowClasses}/>
           <Route exact path = "/edit-class/:id" component ={UpdateClass}/>

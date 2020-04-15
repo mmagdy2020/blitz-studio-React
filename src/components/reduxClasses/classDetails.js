@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import axios from 'axios';
 import { Card, ListGroup, ListGroupItem, Button } from "react-bootstrap"
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'
@@ -32,6 +31,8 @@ export class classDetailsRedux extends Component {
 
 
 
+
+
     let classDetails = <center><div>Loading...</div></center>
     if (this.props.class) {
       return classDetails = (<center >
@@ -39,7 +40,7 @@ export class classDetailsRedux extends Component {
           <Card.Img variant="top" src={this.props.class.imgUrl} />
           <Card.Body>
             <Card.Title > {this.props.class.title} </Card.Title>
-            <Card.Text > {this.props.class.desc} </Card.Text>
+            <Card.Text > {this.props.class.description} </Card.Text>
           </Card.Body>
           <ListGroup className="list-group-flush" >
             <ListGroupItem > {this.props.class.instructor} </ListGroupItem>
@@ -54,6 +55,7 @@ export class classDetailsRedux extends Component {
             <br />
 
             <Button variant="danger" onClick={() => this.deleteClassDetailsHandeller()}>Delete!</Button>
+
           </Card.Body>
         </Card>
 
