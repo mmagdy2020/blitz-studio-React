@@ -47,6 +47,7 @@ class Dashboard extends React.Component {
     this.setState({ mode: "edit", selectedUser: user });
 
   }
+  
   async onSaveChangesToEditUser(formUser) {
     // send post request to create user
     // console.log("Dashboard: onSaveChangesToEditUser: formUser", formUser);
@@ -66,14 +67,13 @@ class Dashboard extends React.Component {
         this.setState({ mode: "view", selectedUser: null, user: updatedUser });
 
         if(this.props.user.role === User.ROLES.ADMIN){
-          let users = await User.GetAllUsers();
-          this.setState({ users });
+          this.refreshUserListData();
         }
         
       } else {
         console.log("admin changed another user");
-        let users = await User.GetAllUsers();
-        this.setState({ users: users, mode: "view", selectedUser: null });
+        this.refreshUserListData();
+        this.setState({mode: "view", selectedUser: null });
       }
     } else {
       alert("Changes weren't saved.");
@@ -103,6 +103,10 @@ class Dashboard extends React.Component {
       this.setState({ users: users });
     }
   }
+  refreshUserListData = async ()=>{
+    let users = await User.GetAllUsers();
+    this.setState({ users });
+  }
 
 
   render() {
@@ -123,7 +127,7 @@ class Dashboard extends React.Component {
 
         {/* <Check-in></Check-in>
       <Attendance-viewer></Attendance-viewer> */}
-        <Checkin user={this.props.user} />
+        <Checkin onUserChange={this.props.onUserChange} user={this.props.user} />
       </div>)
 
     } else if (this.props.user.role === User.ROLES.ADMIN) {
@@ -142,7 +146,7 @@ class Dashboard extends React.Component {
             </div>
             <div id="collapseOne" className="collapse" aria-labelledby="headingOne" data-parent="#accordion">
               <div className="card-body">
-                <UserListWithAttendance users={this.state.users} />
+                <UserListWithAttendance onUserChange={this.props.onUserChange} onUserListChange={this.refreshUserListData} users={this.state.users} />
               </div>
             </div>
           </div>

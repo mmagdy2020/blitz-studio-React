@@ -18,9 +18,11 @@ const Attendance = (props) => {
 
   let attendanceTracker;
   if (user.attendances.length > 0) {
+    // grouping attendances of the same class
     user.attendances = groupDuplicates(user.attendances);
 
     attendanceTracker = user.attendances.map(attendance => {
+      // to map  the attendanceId with its name
       let dc = danceClasses.find(c => c._id === attendance.classId);
 
       return <div key={attendance.classId} className="attendance-tracker">
@@ -44,9 +46,12 @@ const Attendance = (props) => {
           danceClasses={props.danceClasses}
           user={user}
           attendanceDate={props.attendanceDate}
-          attendedClass={props.attendedClass}
+          attendedClassId={props.attendedClassId}
           onAttendanceEditInputChange={props.onAttendanceEditInputChange}
-          onSaveBtnClick={props.onSaveBtnClick} />
+          onSaveBtnClick={props.onSaveBtnClick}
+          onUserListChange={props.onUserListChange}
+          onUserChange={props.onUserChange}
+        />
 
         {attendanceTracker}
       </div>

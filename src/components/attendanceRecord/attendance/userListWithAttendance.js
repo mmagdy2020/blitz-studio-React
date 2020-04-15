@@ -1,7 +1,7 @@
 import React from 'react';
 import Attendance from './attendance';
 import SearchWithBtn from '../sharedComponents/search';
-import { getClasses, getUserAttendance, createSingleAttendance, updateUserBalance} from '../helper';
+import { getClasses, getUserAttendance, createSingleAttendance, updateUserBalance } from '../helper';
 
 class UserListWithAttendance extends React.Component {
 
@@ -10,8 +10,8 @@ class UserListWithAttendance extends React.Component {
         attendanceFetched: false,
         danceClasses: [],
 
-        attendanceDate: '',
-        attendedClass: '',
+        // attendanceDate: '',
+        // attendedClassId: '',
         query: ''
     }
 
@@ -83,22 +83,25 @@ class UserListWithAttendance extends React.Component {
         event.preventDefault();
         console.log(event.target);
         console.log(user);
-        let classId = this.state.attendedClass;
+        let attendedClassId = "attendedClassId" + user._id;
+        let classId = this.state[attendedClassId];
 
-        console.log('this.state.attendedClass : ', classId)
+        console.log('this.state.attendedClassId : ', classId)
         if (classId) {
-           
-        // creating a new attendance record
+
+            // creating a new attendance record
             let response = await createSingleAttendance(classId, user._id);
             console.log('Inside onSaveBtnClick...new attendance created!', response);
 
-            // refresh attendace list
+            // refresh attendance list
             await this.onShowAttendancClick();
+
+
 
             // update state
             this.setState({
                 attendanceDate: '',
-                attendedClass: '',
+                attendedClassId: '',
                 attendanceFetched: true
             });
 
@@ -106,11 +109,15 @@ class UserListWithAttendance extends React.Component {
             // make a patch request to /users/userId to update the balance
             response = await updateUserBalance(user);
 
+            this.props.onUserChange(response);
+
+            this.props.onUserListChange();
+
             console.log('Inside onSaveBtnClick...user balance updated!', response);
 
             // make a get request to /users to get the update users information
 
- 
+
         }
 
     }
@@ -118,11 +125,13 @@ class UserListWithAttendance extends React.Component {
     async componentDidMount() {
         let response = await getClasses();
         console.log('all dance classes: ', response);
-        
+
         this.setState({
             danceClasses: response
         });
     }
+
+
     render() {
         let header, search, attendanceList = '';
 
@@ -143,16 +152,22 @@ class UserListWithAttendance extends React.Component {
 
             );
 
-            attendanceList = this.state.users.map(user => <Attendance
-                key={user._id}
-                danceClasses={this.state.danceClasses}
-                user={user} 
-                attendanceDate={this.state.attendanceDate}
-                attendedClass={this.state.attendedClass}
-                onAttendanceEditInputChange={this.onAttendanceEditInputChange}
-                onSaveBtnClick={this.onSaveBtnClick}
-            />
-            );
+            attendanceList = this.state.users.map(user => {
+                let attendedClassId = "attendedClassId" + user._id;
+                let attendanceDate = "attendanceDate" + user._id;
+
+                return <Attendance
+                    key={user._id}
+                    danceClasses={this.state.danceClasses}
+                    user={user}
+                    attendanceDate={this.state[attendanceDate]}
+                    attendedClassId={this.state[attendedClassId]}
+                    onAttendanceEditInputChange={this.onAttendanceEditInputChange}
+                    onSaveBtnClick={this.onSaveBtnClick}
+                    onUserListChange={this.props.onUserListChange}
+                    onUserChange={this.props.onUserChange}
+                />
+            });
         }
 
         return (

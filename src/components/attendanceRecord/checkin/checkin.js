@@ -16,12 +16,13 @@ class Checkin extends Component {
       viewDetails: false,
       isCheckedIn: false,
       checkedInClasses: [],
-      attendances: []
+      attendances: [],
+      user: this.props.user
     };
 
   }
 
-  onDanceClassClick = async(event, classId) => {
+  onDanceClassClick = async (event, classId) => {
     const checkedInClassesCoppy = [...this.state.checkedInClasses];
     let foundIndex = checkedInClassesCoppy.findIndex(c => c.classId === classId);
     console.log('foundIndex...', foundIndex);
@@ -37,7 +38,7 @@ class Checkin extends Component {
     );
   }
 
-  onLearnMoreBtnClick = () =>{
+  onLearnMoreBtnClick = () => {
     let stateCoppy = { ...this.state };
     stateCoppy.viewDetails = !this.state.viewDetails;
     this.setState(stateCoppy);
@@ -46,16 +47,23 @@ class Checkin extends Component {
   onCheckinBtnClick = async () => {
     // creating attendance record for each classes
     let user = this.props.user;
+    if (this.state.checkedInClasses.length > 0) {
 
-    await createAttendance(this.state.checkedInClasses, user);
 
-    // update user balance
-    let amount = this.state.checkedInClasses.length * 10;
-    await updateUserBalance(user, amount);
 
-    this.setState((state, props) => ({
-      isCheckedIn: true
-    }));
+      await createAttendance(this.state.checkedInClasses, user);
+
+      // update user balance
+      let amount = this.state.checkedInClasses.length * 10;
+      let response = await updateUserBalance(user, amount);
+      this.props.onUserChange(response);
+
+      this.setState((state, props) => ({
+        isCheckedIn: true
+      }));
+    } else {
+      alert('Please select atleas one class before checkin!');
+    }
   }
 
 
@@ -76,7 +84,7 @@ class Checkin extends Component {
   async componentDidUpdate() {
     // get updated user/ user list
     // let users = await User.GetAllUsers();
-    
+
     // console.log('inside componentDidUpdate update user list: ', users);
   }
 
@@ -89,11 +97,11 @@ class Checkin extends Component {
 
     user.checkedInClasses = this.state.checkedInClasses;
     user.attendances = this.state.attendances;
-    
+
 
 
     if (user.role === 'admin') {
-      afterLoginView = <UserListWithAttendance user={user}  />
+      afterLoginView = <UserListWithAttendance user={user} />
     } else if (this.state.isCheckedIn) {
       afterLoginView = <CheckinSuccessView user={user} danceClasses={this.state.danceClasses} />
     } else if (this.state.viewDetails) {
@@ -128,7 +136,7 @@ class Checkin extends Component {
         checkinBtn = <button
           className="btn-checkin"
           onClick={() => this.onCheckinBtnClick()}
-        >CHEKIN</button>;
+        >CHECK IN</button>;
 
       } else {
         classesForTheDayView = <h1>No Class for today</h1>;

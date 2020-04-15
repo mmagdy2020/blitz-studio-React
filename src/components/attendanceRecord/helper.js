@@ -1,6 +1,6 @@
 import axios from 'axios';
 import AttendanceModel from '../../models/attendance';
-
+import User from '../../models/user';
 
 export const createAttendance = async (checkedInClasses, user) => {
     console.log('inside createAttendance...', user)
@@ -17,10 +17,15 @@ export const createAttendance = async (checkedInClasses, user) => {
     return response.data;
 }
 
-export const createSingleAttendance = async (classId, user) => {
-    let userId = user._id;
+export const createSingleAttendance = async (classId, userId) => {
+  
     let newAttendance = new AttendanceModel(userId, classId);
-    let response = await axios.post(axios.defaults.baseURL + '/attendances', newAttendance)
+
+    console.log('response data from helper after newAttendance: ', newAttendance);
+    let uri = axios.defaults.baseURL + '/attendances';
+    console.log('response data from helper uri: ', uri);
+
+    let response = await axios.post(uri, newAttendance)
 
     console.log('response data from helper after createing atendance: ', response.data);
 
@@ -33,11 +38,9 @@ export const updateUserBalance = async (user, amount = 10) => {
     console.log('inside updateUserBalance : ', user);
 
     let payload = { balance: newBalance, _id: user._id };
-    let uri = axios.defaults.baseURL + '/user';
-    let response = await axios.patch(uri, payload);
-
-    console.log('response data from helper after updating balance : ', response.data)
-    return response.data;
+    let response = await User.UpdateUser(payload);
+    console.log('response data from helper after updating balance : ', response)
+    return response;
 }
 
 export const getClasses = async (userId) => {
