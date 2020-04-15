@@ -4,7 +4,9 @@ import UserDetail from '../userDetail/userDetail';
 import UserList from '../userList/userList';
 import EditUser from '../editUser/editUser';
 import User from '../../../models/user';
-import FetchClasses from '../../classes/showClasses/fetchClass';
+
+//Mahmoud
+import FetchClasses from '../../reduxClasses/fetchClasses'
 
 // Mike: 
 import Checkin from '../../attendanceRecord/checkin/checkin';
@@ -174,8 +176,7 @@ class Dashboard extends React.Component {
             </div>
             <div id="collapseThree" className="collapse" aria-labelledby="headingThree" data-parent="#accordion">
               <div className="card-body">
-                All the classes go here
-                {/* <FetchClasses /> */}
+                <FetchClasses isAuth={this.props.user.role}/>
               </div>
             </div>
           </div>

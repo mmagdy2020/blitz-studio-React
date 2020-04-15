@@ -3,17 +3,15 @@ import { connect } from 'react-redux'
 import { getUpdateClass, getClassDetails } from '../store/classState/classAction'
 
 
-
 class UpdateClass extends Component {
-  //Intilie the state to be the choosen Class...
+  //Intilie the state to be the choosen Class Passing using <Link state :{} >
   state = this.props.location.state.class
 
   updateClassHandeller() {
-    console.log(this.props )
     //Dispatch updateClass 
     this.props.onUpdateClass(this.state._id, this.state)
     setTimeout(() => {
-      this.props.history.push('/classes')}, 500); // To aviod loading the page without refreshing it...
+      this.props.history.push('/dashboard')}, 500); // To aviod loading the page without refreshing it...
   }
 
 
@@ -29,7 +27,6 @@ class UpdateClass extends Component {
   render() {
 
     return (
-
 
       <div id="sign-up">
         
@@ -81,18 +78,17 @@ class UpdateClass extends Component {
   }
 }
 
-
 // No need for this mapping....
 const mapStateToProps = (state) => {
   return {
-    class: state.clss.class,
+    // class: state.clss.class,
     classes: state.clss.classes
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onGetClass: (id) => dispatch(getClassDetails(id)),
+    // onGetClass: (id) => dispatch(getClassDetails(id)),
     onUpdateClass: (id, classUpdated) => dispatch(getUpdateClass(id, classUpdated))
   }
 }

@@ -8,6 +8,7 @@ export const UPDATE_CLASS = 'UPDATE_CLASS'
 export const DELETE_CLASS = 'DELETE_CLASS'
 export const INIT_CLASS = 'INIT_CLASS'
 export const GET_CLASS = 'GET_CLASS'
+export const CREATE_SERIES = 'CREATE_SERIES'
 
 
 export const createClass = (fetchedClass) => {
@@ -68,8 +69,6 @@ export const fetchClasses = () => {
     return dispatch => {
         axois.get('/classes').then(result => {
             console.log({'fetchedClassRespone' : result.data })
-
-            console.log(result)
             dispatch(intiClass(result.data))
             
         }).catch(err => console.log(err))
@@ -121,3 +120,26 @@ export const updateClass = (danceClass)=>{
   };
 
 
+export const createSerie = (danceClass) =>{
+    return{
+        type:CREATE_SERIES,
+        payload:danceClass
+    }
+}
+
+export const createClassSerie = (id, cretedClass) => {
+    console.log(id)
+    console.log(cretedClass)
+
+
+    return (dispatch) => {
+    axois.patch('/classes/series/'+ id,cretedClass)
+        .then(result => {
+            console.log({'createdSerie' : result.data })
+          dispatch(createSerie(result.data));
+        })
+        .catch(error => { 
+          throw(error); 
+        });
+    };
+  };

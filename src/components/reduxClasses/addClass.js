@@ -16,9 +16,8 @@ class AddClassRedux extends Component {
     date: "",
     time: "",
     imgUrl: "",
-    // isSeries:  "",
-    // isDropInCLass: "",
-    // isPartOfSeries: ""
+    isSeries: false,
+    seriesClass: []
   };
 
 
@@ -27,7 +26,7 @@ class AddClassRedux extends Component {
     console.log(this.props)
     this.props.onCreateClass(this.state)
         setTimeout(() => {
-      this.props.history.push('/classes')}, 500); // To aviod loading the page without refreshing it...
+      this.props.history.push('/dashboard')}, 500); // To aviod loading the page without refreshing it...
   
 }
 
@@ -35,7 +34,7 @@ class AddClassRedux extends Component {
 
     return (
 
-      <div id="sign-up">
+      <div id="log-in">
         <div className="container">
           <h1>Create a new dance class</h1>
           <form>
@@ -72,6 +71,10 @@ class AddClassRedux extends Component {
               <input className="form-control" name="time" id="time" type="time" value={this.state.time} onChange={(event)=>this.setState({time:event.target.value}) }></input>
             </div>
 
+            <div className="form-group">
+              <label htmlFor="isSeries">isSeries:</label>
+              <input className="form-control" name="isSeries" id="isSeries" type="checkbox" value={this.state.isSeries} onChange={(event) => this.setState({ isSeries: event.target.checked })}></input>
+            </div>
 
             <div className="form-group">
             {/* <button type="button" className="btn btn-outline-primary" onClick={this.addClassHandler}>Submit!</button> */}
@@ -91,7 +94,6 @@ const mapDispatchToProps = (dispatch) => {
 
     return {
       onCreateClass: (dClass) => dispatch(createClassAsync(dClass))
-  
     }
   }
 export default connect(null,mapDispatchToProps)(AddClassRedux);
