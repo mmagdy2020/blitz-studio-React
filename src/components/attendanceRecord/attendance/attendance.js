@@ -1,53 +1,64 @@
 import React, { Component } from 'react';
 import './attendance.scss';
+import { Line } from 'rc-progress';
+import CircleImg from '../sharedComponents/circleImg';
+import AttendanceEditForm from './attendanceEditForm';
+import { groupDuplicates } from '../helper';
 
-// Mike:
-import LineProgress from '../sharedComponents/lineProgress';
-// import User from '../../../models/user';
 
 
-class Attendance extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      date: new Date()
-    };
-  }
+const Attendance = (props) => {
+  const danceClasses = props.danceClasses;
+  const user = props.user;
 
-  onChange = date => {
-    console.log('picked data: ', date);
-    this.setState({ date });
-    console.log(this.state)
-  }
+  let userProfile = <div className="img">
+    <CircleImg user={user} caption='Bachata' />
+    <p>{user.firstname + ' ' + user.lastname}</p>
+  </div>;
 
-  render() {
-    // let user = new User();
-    let user = this.props.user;
-    let danceClasses = ['Salsa', 'Bachata', 'Connection Dance Workshops'];
+  let attendanceTracker;
+  if (user.attendances.length > 0) {
+    // grouping attendances of the same class
+    user.attendances = groupDuplicates(user.attendances);
 
-    return (
-      <div className="user-attendance">
-        <LineProgress user={user} caption='Bachata' />
-        <div className="user-attendance-item">
-          <select className="form-control" >
-            <option>{danceClasses[0]}</option>
-            <option>{danceClasses[1]}</option>
-            <option>{danceClasses[2]}</option>
-          </select>
-        </div>
+    attendanceTracker = user.attendances.map(attendance => {
+      // to map  the attendanceId with its name
+      let dc = danceClasses.find(c => c._id === attendance.classId);
 
-        <div className="user-attendance-item">
-          <input
-            className="form-control"
-            type="date" />
-        </div>
-
-        <div className="user-attendance-item">
-          <button className="btn btn-success">Checkin</button>
-        </div>
+      return <div key={attendance.classId} className="attendance-tracker">
+        <Line
+          percent={attendance.count}
+          strokeWidth={2}
+          strokeColor="#4caf50"
+        />
+        <span>{dc ? dc.title : ''}</span>
       </div>
-    );
+    });
   }
+
+
+  return (
+    <div className="user-attendance">
+      {userProfile}
+
+      <div className="form-attendance-tracker">
+        <AttendanceEditForm
+          danceClasses={props.danceClasses}
+          user={user}
+          attendanceDate={props.attendanceDate}
+          attendedClassId={props.attendedClassId}
+          onAttendanceEditInputChange={props.onAttendanceEditInputChange}
+          onSaveBtnClick={props.onSaveBtnClick}
+          onUserListChange={props.onUserListChange}
+          onUserChange={props.onUserChange}
+        />
+
+        {attendanceTracker}
+      </div>
+
+    </div>
+  );
 }
+
 
 export default Attendance;

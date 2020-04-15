@@ -1,9 +1,10 @@
-export default class Attendance {
+import moment from 'moment';
+
+export default class AttendanceModel {
     constructor(userId, classId, date) {
-        this._id = '';
         this.userId = userId;
         this.classId = classId;
         this.attendance = 0;
-        this.date = date;
+        this.date = date || moment().format('YYYY-MM-DD');
     }
 }

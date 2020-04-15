@@ -1,4 +1,5 @@
 import React from 'react';
+import './sharedComponent.scss';
 
 const SearchWithBtn = (props) => {
     return (
@@ -7,10 +8,16 @@ const SearchWithBtn = (props) => {
                 <input
                     className="form-control"
                     type="text"
-                    placeholder="Search User" />
+                    name="query"
+                    value={props.query}
+                    placeholder="Search User"
+                    onChange={(event) => props.onSearchInputChange(event)}
+                />
             </div>
             <div >
-                <button className="btn btn-primary">Search</button>
+                <button className="btn btn-primary"
+                    onClick={() => props.onSearchBtnClick()}
+                >Search</button>
             </div>
         </div>
     )

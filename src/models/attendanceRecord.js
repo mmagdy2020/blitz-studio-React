@@ -5,6 +5,8 @@ export default class AttendanceRecord {
         this.attendances = [Attendance];
     }
 }
+
+
 class Attendance {
     constructor(userId, classId, date) {
         this._id = '';
