@@ -5,7 +5,7 @@ const danceClassCard = (props) => {
         <React.Fragment>
             <div className="dance-class-info">
                 <div>
-                    <img src={props.imgUrl} alt="salsa dance" />
+                    <img src={props.imgUrl} alt={props.title} />
                 </div>
                 <div>
                     <h3>{props.title}</h3>
@@ -17,7 +17,7 @@ const danceClassCard = (props) => {
                 <button
                     className="btn btn-primary"
                     onClick={() => this.onLearnMoreBtnClick()}
-                > LEARN MORE >></button>
+                > Learn More >></button>
             </div>
         </React.Fragment>
     );
