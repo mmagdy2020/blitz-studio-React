@@ -1,74 +1,89 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { getClassDetails,createClassSerie} from '../store/classState/classAction'
+import { getClassDetails, createClassSerie } from '../store/classState/classAction'
 import './createClass.css'
 
 class CreateSerie extends Component {
-//   state = this.props.location.state.class
+  constructor(props){
+    super(props)
 
-  updateClassHandeller() {
-    //Dispatch updateClass 
-    this.props.onCreateSerie(this.state._id, this.state)
+    console.log(this.props)
+
+     this.state = {
+        weekNumber: "",
+        desc: "",
+        day: "",
+        timeWeekly: ""
+      }
+    }
+
+  onCreateNextWeekClass() {
+    const id = this.props.match.params.id
+    const classSeries = this.state
+    this.props.onCreateSerie(id,classSeries)
     setTimeout(() => {
-      this.props.history.push('/classes')}, 500); // To aviod loading the page without refreshing it...
-  } 
+      this.props.history.push('/classes')}, 500)
+    
+  }
+  
+// Handle event using handleFunction instead of using this.setState on the dom.
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.value;
+    const name = target.id;
 
-
-
-  componentDidMount() {
-    console.log(this.props.match.params.id)
- 
-    this.props.onGetClass(this.props.match.params.id)  // Props.class (The Entire Object)...
+    this.setState({[name] : value})
+    // console.log(this.state)
   }
 
-onChangeHandeler =(event)=>{
 
-    if(this.props.class){
-        this.set
-    }
-}
 
   render() {
 
-    console.log(this.props)
     return (
+      <center>
+        {this.props.class ?
+          <div id="createS">
+            <div className="form-group">
 
-        <div>
-    //     <div id="createS">
-    //     <div className="form-group">
+              <div className="form-group">
+                <label htmlFor="WeekNumber">Week#: </label>
+                <select className="form-control" id="weekNumber" value={this.state.weekNumber || ''} onChange={(event) => this.handleInputChange(event)}>
+                 <option>Choose One</option>
+                  <option>Week 1</option>
+                  <option>Week 2</option>
+                  <option>Week 3</option>
+                  <option>Week 4</option>
+                </select>
+              </div>
 
-    //       <div className="form-group">
-    //         <label htmlFor="WeekNumber">Week#: </label>
-    //         <select className="form-control" id="WeekNumber" value={this.props.class} onChange={(event) => this.setState({ weekNumber: event.target.option })}>
-    //           <option>Week 1</option>
-    //           <option>Week 2</option>
-    //           <option>Week 3</option>
-    //           <option>Week 4</option>
-    //         </select>
-    //       </div>
+              <div>
+                <label htmlFor="desc">description: </label>
+                {/* <input type="desc" class="form-control" id="desc" placeholder="Short description..." /> */}
+                <textarea className="form-control" id="desc" rows="3" value={this.state.desc || ''} onChange={(event) => this.handleInputChange(event)} ></textarea>
+              </div>
 
-    //       <div>
-    //         <label htmlFor="desc">description: </label>
-    //         {/* <input type="desc" class="form-control" id="desc" placeholder="Short description..." /> */}
-    //         <textarea className="form-control" id="desc" rows="3" value='' onChange={(event) => this.setState({ desc: event.target.value })} ></textarea>
-    //       </div>
+              <div className="form-group">
+                <label htmlFor="Day">day: </label>
+                <input type="Day" className="form-control" id="day" placeholder=" day.." value={this.state.day || ''} onChange={(event) => this.handleInputChange(event)} />
+              </div>
 
-    //       <div className="form-group">
-    //         <label htmlFor="Day">day: </label>
-    //         <input type="Day" className="form-control" id="day" placeholder=" day.." value='' onChange={(event) => this.setState({ day: event.target.value })}/>
-    //         </div>
-        
 
-    //     <div className="form-group">
-    //         <label htmlFor="timeWeekly">time: </label>
-    //         <input type="timeWeekly" className="form-control" id="timeWeekly" placeholder=" time.." value='' onChange={event => this.setState({timeWeekly: event.target.value})} />
-    //       </div>
+              <div className="form-group">
+                <label htmlFor="timeWeekly">time: </label>
+                <input type="timeWeekly" className="form-control" id="timeWeekly" placeholder=" time.." value={this.state.timeWeekly || ''} onChange={(event) => this.handleInputChange(event)} />
+              </div>
 
-    //       <button onChange={()=>{this.onCreateNextWeekClass()}}>next</button>
-    //       <br/>
-    //     </div>
-    //   </div>
-  </div>
+              <button onClick={() => { this.onCreateNextWeekClass() }}>Save/create another</button>
+              <button onClick={() => { this.onCreateNextWeekClass() }}>Save</button>
+
+              <br />
+            </div>
+          </div> : <div> hi </div>
+
+        }
+
+      </center>
     )
   }
 }

@@ -135,7 +135,7 @@ export const createClassSerie = (id, cretedClass) => {
 
 
     return (dispatch) => {
-    axois.patch('/classes/'+ id,cretedClass)
+    axois.patch('/classes/series/'+ id,cretedClass)
         .then(result => {
             console.log({'createdSerie' : result.data })
           dispatch(createSerie(result.data));

@@ -52,7 +52,7 @@ class showReuxClass extends Component {
                       
                       <Button variant="info" onClick={() => { this.showClassDetailsHandeller(danceClass._id) }} >Details</Button>
                       <br/>
-                      {danceClass.isSeries ? <Link to={`/createSerie/${danceClass._id}`} ><Button variant="primary">createSeries!</Button>{' '}</Link> :<div/>}
+                      {danceClass.isSeries ? <Link to={`/create-serie/${danceClass._id}`} ><Button variant="primary">createSeries!</Button>{' '}</Link> :<div/>}
                    
                    </Card.Body>
                   </Card>

@@ -59,12 +59,12 @@ const classReducer = (state = intiState, action) => {
 
         case CREATE_SERIES:
             console.log(state)
-            const createdOne = state.classes.filter(dClass =>  dClass._id === action.payload._id
+            const createdOne = state.classes.filter(dClass =>  dClass._id !== action.payload._id
             )
             console.log(createdOne)
             return{
                 ...state,
-                classes:action.payload
+                classes:createdOne.concat(action.payload)
             }
 
         default:

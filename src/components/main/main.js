@@ -47,7 +47,7 @@ export default class Main extends React.Component {
           <Route exact path = "/classes/:id" component={classDetailsRedux}/>
           <Route exact path = "/edit-class/:id" component ={updateClassRedux}/>
           <Route exact path ="/add-class" component ={addClassReduc}/>
-          <Route exact path ="/createSerie/:id" component ={CreateClassSeries}/>
+          <Route exact path ="/create-serie/:id" component ={CreateClassSeries}/>
 
 
           {/* <Route exact path = "/classes" component={ShowClasses}/>
