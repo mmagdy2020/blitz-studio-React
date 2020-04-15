@@ -1,10 +1,11 @@
-# Quarentine Reactionaries
+# Quarentine Reactionaries: UI
 
 # ![Node/Express/Mongoose Project App](public/projectLogo.png) 
 ## Live hosted site [here](https://blitz-studio-react.azurewebsites.net/)
----
+
 This repo is functionality complete — PRs and issues are welcome!
 
+---
 ## Dependencies
 
 - axios
@@ -22,6 +23,7 @@ This repo is functionality complete — PRs and issues are welcome!
 - redux
 - redux-thunk
 
+---
 ## Getting started
 
 To get the Node server running locally:
@@ -30,6 +32,7 @@ To get the Node server running locally:
 - `npm install` to install all required dependencies
 - `npm sart` to start the local server
 
+---
 ## Application Structure
 
 - `index.js` - The entry point to our application..
@@ -40,23 +43,25 @@ To get the Node server running locally:
 
 - `public/` - This folder contains the static files.
 
+---
 ## Authentication and authorization
 
 Requests are authenticated using username and password and routes are guarded by role based authorization
 
-<br />
+---
 
 ## Continuous Integration and Continuous Delivery (CI/CD)
 
 - [Azure devops ](https://dev.azure.com) was used for CI/CD
 - The `master` branch is guarded by branch policy and continous integration is triggerd only after successful pull request approval
 
-
+---
 ## Authors
 * Michael Woldemedihin
 * Sophia Blitz
 * Mahmoud Magdy
 
+---
 ## License
 
 This project is licensed under the MIT License 
