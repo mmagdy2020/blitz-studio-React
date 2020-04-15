@@ -18,21 +18,23 @@ export default class UserDetail extends React.Component {
       <div className="card">
         <div className="card-body">
           <div className="row">
-            <div className="col-2">
+            <div className="d-none d-sm-block col-sm-5 col-md-2">
               <img alt="Profile" className="card-img" src={user.imgUrl}></img>
             </div>
-            <div className="col-7">
+            <div className="col-xs-10 col-sm-7 col-md-6">
               <h3 className="card-title">{this.props.user.firstname} {this.props.user.lastname} {this.props.user.role === "admin" ? <span className="small">(Admin)</span> : null}</h3>
               <span className="card-subtitle">{this.props.user.isMiuStudent ? "Student" : ""}</span>
               <p className="card-text">
-                e. {this.props.user.email}
+                email: <span className="text-primary">{this.props.user.email}</span>
                 <br></br>
-                p. {this.props.user.phone}
+                phone: {this.props.user.phone}
+                <br></br>
+                balance: <span className={this.props.user.balance <= 0 ? "text-danger" : ""} >${this.props.user.balance}</span>
               </p>
             </div>
-            <div className="col-3">
-              <button type="button" onClick={_ => { this.onClickEditUser() }} className="btn btn-outline-info mx-2 my-2">Edit</button>
-              <button type="button" onClick={_ => { this.onClickDeleteUser() }} className="btn btn-outline-danger mx-2 my-2">Delete</button>
+            <div className="col-xs-12 col-md-4">
+              <button type="button" onClick={_ => { this.onClickEditUser() }} className="btn btn-outline-info mr-2 my-2">Edit</button>
+              <button type="button" onClick={_ => { this.onClickDeleteUser() }} className="btn btn-outline-danger my-2">Delete</button>
             </div>
           </div>
 
