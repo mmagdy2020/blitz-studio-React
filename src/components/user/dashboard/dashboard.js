@@ -123,7 +123,6 @@ class Dashboard extends React.Component {
 
       dash = (<div className="container">
         <h1>{this.props.user.firstname}'s Dashboard</h1>
-        <Profile user={this.props.user} />
 
         {this.state.mode === "edit" ? <EditUser user={this.props.user} onUserChange={user => this.onSaveChangesToEditUser(user)} onCancel={_ => this.setState({ mode: "view" })} ></EditUser> : <UserDetail user={this.props.user} onClickDelete={user => this.onClickDeleteUser(user)} onClickEdit={user => this.onClickEditUser(user)} />}
 
