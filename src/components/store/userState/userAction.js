@@ -21,7 +21,7 @@ export const RECEIVE_ACTICE_USER = "RECEIVE_ACTIVE_USER";
 
 
 export const requestAllUsers = () => { return { type: REQUEST_ALL_USERS } }
-export const receiveAllUsers = (users) => { return { type: RECEIVE_ALL_USERS, users } }
+export const receiveAllUsers = (payload) => { return { type: RECEIVE_ALL_USERS, ...payload } }
 
 export const getAllUsers = () => {
   console.log("action getAllUsers")
@@ -31,8 +31,8 @@ export const getAllUsers = () => {
     axios.get('/users').then(
       response => {
         console.log("get all users response:", response);
-        const allUsers = Array.from(response.data) || [];
-        dispatch(receiveAllUsers, allUsers);
+        const users = Array.from(response.data) || [];
+        dispatch(receiveAllUsers({users, receivedAt: Date.now()})
       },
       err => { console.log("error in userAction.js getAllUsers(): ", err) }
     )
@@ -40,7 +40,7 @@ export const getAllUsers = () => {
 }
 
 export const requestUser = (id) => { return { type: REQUEST_ACTIVE_USER, id } }
-export const receiveUser = (user) => { return { type: RECEIVE_ACTICE_USER, user } }
+export const receiveUser = (payload) => { return { type: RECEIVE_ACTICE_USER, ...payload } }
 
 export const getUser = (id) => {
   console.log("action getUser")
@@ -50,7 +50,8 @@ export const getUser = (id) => {
     axios.get('/users/' + id).then(
       response => {
         console.log("get user response:", response);
-        dispatch(receiveUser(response.data))
+        const user = response.data;
+        dispatch(receiveUser({ user, receivedAt: Date.now() }))
       },
       err => { console.log("error in userAction.js getUser():", err) }
     )
